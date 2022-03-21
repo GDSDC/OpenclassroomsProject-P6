@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ProjectModuleManager">
-    <modules>
-      <module fileurl="file://$PROJECT_DIR$/../../Learning/Learning_Web/.idea/Learning_Web.iml" filepath="$PROJECT_DIR$/../../Learning/Learning_Web/.idea/Learning_Web.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/R6-Repo.iml" filepath="$PROJECT_DIR$/.idea/R6-Repo.iml" />
-    </modules>
-  </component>
-</project>
