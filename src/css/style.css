@@ -1,0 +1,25 @@
+/* Header/Logo Title */
+header {
+    /*padding: 60px;*/
+    /*text-align: center;*/
+    /*background: #1abc9c;*/
+    /*color: white;*/
+    font-size: 30px;
+    /* Borders for debugging */
+    border: 2px solid red;
+}
+
+li {
+  display: inline;
+}
+
+section {
+    /*padding: 60px;*/
+    /*text-align: center;*/
+    /*background: #1abc9c;*/
+    /*color: white;*/
+    font-size: 30px;
+    /* Borders for debugging */
+    border: 2px solid red;
+}
+
