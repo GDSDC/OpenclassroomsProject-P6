@@ -1,25 +1,36 @@
 /* Header/Logo Title */
 header {
-    /*padding: 60px;*/
-    /*text-align: center;*/
-    /*background: #1abc9c;*/
-    /*color: white;*/
     font-size: 30px;
     /* Borders for debugging */
     border: 2px solid red;
 }
 
 li {
-  display: inline;
+    display: inline;
 }
 
-section {
-    /*padding: 60px;*/
-    /*text-align: center;*/
-    /*background: #1abc9c;*/
-    /*color: white;*/
-    font-size: 30px;
+.main-block {
+    /* Borders for debugging */
+    border: 2px solid lightseagreen;
+    height: 300px;
+    padding: .5em;
+}
+
+.block {
+    display: block;
+    border: 2px solid lightseagreen;
+    width: 14%;
+    height: 100px;
+    padding: .5em;
+}
+
+
+.category {
     /* Borders for debugging */
     border: 2px solid red;
+    padding: .2em;
+    display: flex;
+    list-style: none;
 }
+
 
