@@ -24,6 +24,12 @@ li {
     height: 100px;
 }
 
+.thumbnail {
+    object-fit: cover;
+    width: 100%;
+    height: inherit;
+}
+
 .category-blocks {
     display: flex;
 }
