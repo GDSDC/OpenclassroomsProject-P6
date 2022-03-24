@@ -22,3 +22,16 @@ for (let i = 0; i < movies_ids.length; i++) {
     document.getElementById(movies_ids[i]).append(get_movie_image(movies_ids[i]));
 }
 
+const xhr = new XMLHttpRequest();
+xhr.open("GET", "http://localhost:8000/api/v1/genres/");
+xhr.send()
+
+xhr.onload = function () {
+    if (xhr.status === 200) {
+        data = JSON.parse(xhr.responseText);
+        console.log(data.count);
+        console.log(data.products);
+    } else if (xhr.status === 404) {
+        console.log("No records found")
+    }
+}
