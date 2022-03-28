@@ -17,6 +17,27 @@ li {
     height: 300px;
 }
 
+.carousel {
+    display: flex;
+    flex-direction: row;
+}
+
+.carousel__movie {
+    margin: 1em;
+    border: 2px solid lightseagreen;
+    width: 14%;
+    height: 100px;
+}
+
+.carousel__movie__thumbnail {
+    height: 100%;
+    width: 100%;
+}
+
+.carousel__movie:hover {
+    border: 2px solid black;
+}
+
 .block {
     display: block;
     border: 2px solid lightseagreen;
