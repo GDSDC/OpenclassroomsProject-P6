@@ -17,10 +17,10 @@ function get_movie_image(id) {
     return movie_img;
 }
 
-// Display Images
-for (let i = 0; i < movies_ids.length; i++) {
-    document.getElementById(movies_ids[i]).append(get_movie_image(movies_ids[i]));
-}
+// // Display Images
+// for (let i = 0; i < movies_ids.length; i++) {
+//     document.getElementById(movies_ids[i]).append(get_movie_image(movies_ids[i]));
+// }
 
 const xhr = new XMLHttpRequest();
 xhr.open("GET", "http://localhost:8000/api/v1/genres/");
