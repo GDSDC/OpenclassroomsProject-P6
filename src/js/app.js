@@ -17,6 +17,7 @@ function get_movie_image(id) {
     return movie_img;
 }
 
+
 // // Display Images
 // for (let i = 0; i < movies_ids.length; i++) {
 //     document.getElementById(movies_ids[i]).append(get_movie_image(movies_ids[i]));
@@ -35,3 +36,43 @@ xhr.onload = function () {
         console.log("No records found")
     }
 }
+
+
+// Get the modal
+var modal_elements = document.querySelectorAll(".modal");
+
+// Get the button that opens the modal
+var modal__trigger_elements = document.querySelectorAll(".modal__trigger");
+
+// Get the <span> element that closes the modal
+var span_elements = document.querySelectorAll(".close");
+console.log(span_elements.length)
+
+// When the user clicks on the modal__triggers, open the modal
+for (let i = 0; i < modal__trigger_elements.length; i++) {
+    modal__trigger_elements[i].onclick = function () {
+        modal_elements[i].style.display = "block";
+    }
+}
+// When the user clicks on <span> (x), close the modal
+for (let i = 0; i < span_elements.length; i++) {
+    span_elements[i].onclick = function () {
+        modal_elements[i].style.display = "none";
+    }
+}
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+    for (let i = 0; i < modal_elements.length; i++) {
+        if (event.target == modal_elements[i]) {
+            modal_elements[i].style.display = "none";
+        }
+    }
+}
+
+window.addEventListener('keydown', function (event) {
+    for (let i = 0; i < modal_elements.length; i++) {
+        if (event.key === 'Escape') {
+            modal_elements[i].style.display = 'none'
+        }
+    }
+})
