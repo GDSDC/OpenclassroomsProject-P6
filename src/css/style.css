@@ -5,6 +5,7 @@ body {
     color: white;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 20px;
+    margin-left: 2em;
 
 }
 
@@ -53,7 +54,23 @@ li {
     left: 10%;
     transform: translate(-50%, -50%);
     color: white;
+    font-weight: bold;
 }
+
+.hero__play_button {
+    background-color: white;
+    border: none;
+    color: #141414;
+    font-weight: bold;
+    padding: 20px;
+    text-align: center;
+    /*text-decoration: none;*/
+    /*display: inline-block;*/
+    font-size: 16px;
+    /*margin: 4px 2px;*/
+    border-radius: 4px;
+}
+
 
 .carousel {
     display: flex;
