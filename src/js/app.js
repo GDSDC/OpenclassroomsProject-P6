@@ -1,4 +1,5 @@
-const movies_ids = ["best_movie_IMG", "top_rated_movie_1", "top_rated_movie_2", "top_rated_movie_3", "top_rated_movie_4", "top_rated_movie_5", "top_rated_movie_6", "top_rated_movie_7", "category_1_movie_1", "category_1_movie_2", "category_1_movie_3", "category_1_movie_4", "category_1_movie_5", "category_1_movie_6", "category_1_movie_7", "category_2_movie_1", "category_2_movie_2", "category_2_movie_3", "category_2_movie_4", "category_2_movie_5", "category_2_movie_6", "category_2_movie_7", "category_3_movie_1", "category_3_movie_2", "category_3_movie_3", "category_3_movie_4", "category_3_movie_5", "category_3_movie_6", "category_3_movie_7"]
+const movies_ids = ["best_movie", "top_rated_movie_1", "top_rated_movie_2", "top_rated_movie_3", "top_rated_movie_4", "top_rated_movie_5", "top_rated_movie_6", "top_rated_movie_7", "category_1_movie_1", "category_1_movie_2", "category_1_movie_3", "category_1_movie_4", "category_1_movie_5", "category_1_movie_6", "category_1_movie_7", "category_2_movie_1", "category_2_movie_2", "category_2_movie_3", "category_2_movie_4", "category_2_movie_5", "category_2_movie_6", "category_2_movie_7", "category_3_movie_1", "category_3_movie_2", "category_3_movie_3", "category_3_movie_4", "category_3_movie_5", "category_3_movie_6", "category_3_movie_7"]
+
 
 
 function get_movies_images_json() {
@@ -76,3 +77,30 @@ window.addEventListener('keydown', function (event) {
         }
     }
 })
+
+// Generate HTML modal template
+function generate_modal_HTML (id){
+    let modal_HTML_output = '<!-- Modal content -->\n' +
+        '                <div class="modal-content">\n' +
+        '                    <span class="close">&times;</span>\n' +
+        '                    <img class="modal__movie__thumbnail" src="assets/' + movies_ids[id] + '_placeholder.png"/>\n' +
+        '                    <p class="movie__title">Titre : ' + movies_ids[id] + '_TITLE_placeholder</p>\n' +
+        '                    <p class="movie__genres">Genre Complet : ' + movies_ids[id] + '_GENRES_placeholder</p>\n' +
+        '                    <p class="movie__year">Date de sortie : ' + movies_ids[id] + '_YEAR_placeholder</p>\n' +
+        '                    <p class="movie__rated">Rated : ' + movies_ids[id] + '_RATED_placeholder</p>\n' +
+        '                    <p class="movie__imdb_score">Rated : ' + movies_ids[id] + '_IMDB_SCORE_placeholder</p>\n' +
+        '                    <p class="movie__directors">Réalisateur : ' + movies_ids[id] + '_DIRECTORS_placeholder</p>\n' +
+        '                    <p class="movie__actors">Liste des acteurs : ' + movies_ids[id] + '_ACTORS_placeholder</p>\n' +
+        '                    <p class="movie__duration">Durée : ' + movies_ids[id] + '_DURATION_placeholder</p>\n' +
+        '                    <p class="movie__country">Pays d\'origine : ' + movies_ids[id] + '_COUNTRY_placeholder</p>\n' +
+        '                    <p class="movie__box_office_score">Résultat au Box Office : ' + movies_ids[id] + '_BOX_OFFICE_SCORE_placeholder</p>\n' +
+        '                    <p class="movie__summary">Résumé du film : ' + movies_ids[id] + '_SUMMARY_placeholder</p>\n' +
+        '                </div>\n' +
+        '            </div>'
+    return modal_HTML_output
+}
+
+// Inserting all modals in HTML
+    for (let i = 0; i < modal_elements.length; i++) {
+        modal_elements[i].innerHTML = generate_modal_HTML (i);
+    }
