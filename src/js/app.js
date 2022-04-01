@@ -38,23 +38,26 @@ var modal_elements = document.querySelectorAll(".modal");
 
 // Generate HTML modal template
 function generate_modal_HTML(id) {
-    let modal_HTML_output = '<!-- Modal content -->\n' +
-        '                <div class="modal-content">\n' +
-        '                    <span class="close">&times;</span>\n' +
-        '                    <img class="modal__movie__thumbnail" src="assets/' + movies_ids[id] + '_placeholder.png"/>\n' +
-        '                    <p class="movie__title">Titre : ' + movies_ids[id] + '_TITLE_placeholder</p>\n' +
-        '                    <p class="movie__genres">Genre Complet : ' + movies_ids[id] + '_GENRES_placeholder</p>\n' +
-        '                    <p class="movie__year">Date de sortie : ' + movies_ids[id] + '_YEAR_placeholder</p>\n' +
-        '                    <p class="movie__rated">Rated : ' + movies_ids[id] + '_RATED_placeholder</p>\n' +
-        '                    <p class="movie__imdb_score">Rated : ' + movies_ids[id] + '_IMDB_SCORE_placeholder</p>\n' +
-        '                    <p class="movie__directors">Réalisateur : ' + movies_ids[id] + '_DIRECTORS_placeholder</p>\n' +
-        '                    <p class="movie__actors">Liste des acteurs : ' + movies_ids[id] + '_ACTORS_placeholder</p>\n' +
-        '                    <p class="movie__duration">Durée : ' + movies_ids[id] + '_DURATION_placeholder</p>\n' +
-        '                    <p class="movie__country">Pays d\'origine : ' + movies_ids[id] + '_COUNTRY_placeholder</p>\n' +
-        '                    <p class="movie__box_office_score">Résultat au Box Office : ' + movies_ids[id] + '_BOX_OFFICE_SCORE_placeholder</p>\n' +
-        '                    <p class="movie__summary">Résumé du film : ' + movies_ids[id] + '_SUMMARY_placeholder</p>\n' +
-        '                </div>\n' +
-        '            </div>'
+    let modal_HTML_output = `<!-- Modal content -->
+    <div class="modal-content">
+        <div>
+            <img class="modal__movie__thumbnail" src="assets/` + movies_ids[id] + `_placeholder.png"/>
+            <p class="movie__title">Titre : ` + movies_ids[id] + `_TITLE_placeholder</p>
+            <p class="movie__genres">Genre Complet : ` + movies_ids[id] + `_GENRES_placeholder</p>
+            <p class="movie__year">Date de sortie : ` + movies_ids[id] + `_YEAR_placeholder</p>
+            <p class="movie__rated">Rated : ` + movies_ids[id] + `_RATED_placeholder</p>
+            <p class="movie__imdb_score">Score Imdb : ` + movies_ids[id] + `_IMDB_SCORE_placeholder</p>
+        </div>
+        <div>
+            <p class="movie__directors">Réalisateur : ` + movies_ids[id] + `_DIRECTORS_placeholder</p>
+            <p class="movie__actors">Liste des acteurs : ` + movies_ids[id] + `_ACTORS_placeholder</p>
+            <p class="movie__duration">Durée : ` + movies_ids[id] + `_DURATION_placeholder</p>
+            <p class="movie__country">Pays d\'origine : ` + movies_ids[id] + `_COUNTRY_placeholder</p>
+            <p class="movie__box_office_score">Résultat au Box Office : ` + movies_ids[id] + `_BOX_OFFICE_SCORE_placeholder</p>
+            <p class="movie__summary">Résumé du film : ` + movies_ids[id] + `_SUMMARY_placeholder</p>
+        </div>
+        <span class="close">&times;</span>
+    </div>`
     return modal_HTML_output
 }
 
