@@ -1,6 +1,5 @@
 const movies_ids = ["best_movie", "top_rated_movie_1", "top_rated_movie_2", "top_rated_movie_3", "top_rated_movie_4", "top_rated_movie_5", "top_rated_movie_6", "top_rated_movie_7", "category_1_movie_1", "category_1_movie_2", "category_1_movie_3", "category_1_movie_4", "category_1_movie_5", "category_1_movie_6", "category_1_movie_7", "category_2_movie_1", "category_2_movie_2", "category_2_movie_3", "category_2_movie_4", "category_2_movie_5", "category_2_movie_6", "category_2_movie_7", "category_3_movie_1", "category_3_movie_2", "category_3_movie_3", "category_3_movie_4", "category_3_movie_5", "category_3_movie_6", "category_3_movie_7"]
 
-
 function get_movies_images_json() {
     return fetch("src/tests/img/JSON/movies_images.json")
         .then(response => {
@@ -17,19 +16,19 @@ function get_movie_image(id) {
     return movie_img;
 }
 
-const genres = [];
+// var genres = [];
 
 function get_movie_genres() {
-    // Initiate Request
+// Initiate Request
     let xhr = new XMLHttpRequest();
     xhr.open("GET", "http://localhost:8000/api/v1/genres/");
     xhr.send();
 
-    // Initiate variables
-    // let genres = [];
+// Initiate variables
+    let genres = [];
     let next = 'ok';
 
-    // Request Onload
+// Request Onload
     xhr.onload = function () {
         if (xhr.status === 200) {
             data = JSON.parse(xhr.responseText);
@@ -46,13 +45,57 @@ function get_movie_genres() {
         } else if (xhr.status === 404) {
             console.log("No records found")
         }
-        // console.log(genres)
-        // return genres
     }
+    return genres;
 }
 
-get_movie_genres();
-console.log(genres);
+genres = get_movie_genres();
+
+function delay(time) {
+    return new Promise(resolve => setTimeout(resolve, time));
+}
+
+delay(100).then(() => console.log(genres));
+
+
+function get_movies_by_genre(genre_input) {
+// Initiate Request
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "http://localhost:8000/api/v1/titles/?imdb_score_min=8.8&genre=" + genre_input);
+    xhr.send();
+
+// Initiate variables
+    let movies_by_genre = [];
+    let next = 'ok';
+
+// Request Onload
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            data = JSON.parse(xhr.responseText);
+            // Fill in genres variable
+            for (let movie in data.results) {
+                movies_by_genre.push(data.results[movie]);
+            }
+            // Check if next page exist
+            next = data.next;
+            if (next != null) {
+                xhr.open("GET", next);
+                xhr.send();
+            }
+        } else if (xhr.status === 404) {
+            console.log("No records found")
+        }
+    }
+    return movies_by_genre;
+}
+
+movies_action = get_movies_by_genre('Action');
+movies_musical = get_movies_by_genre('Musical');
+movies_trhiller = get_movies_by_genre('Thriller');
+
+delay(500).then(() => console.log(movies_action));
+delay(500).then(() => console.log(movies_musical));
+delay(500).then(() => console.log(movies_trhiller));
 
 
 // Get the modal
