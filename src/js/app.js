@@ -17,20 +17,42 @@ function get_movie_image(id) {
     return movie_img;
 }
 
+const genres = [];
 
-// const xhr = new XMLHttpRequest();
-// xhr.open("GET", "http://localhost:8000/api/v1/genres/");
-// xhr.send()
-//
-// xhr.onload = function () {
-//     if (xhr.status === 200) {
-//         data = JSON.parse(xhr.responseText);
-//         console.log(data.count);
-//         console.log(data.products);
-//     } else if (xhr.status === 404) {
-//         console.log("No records found")
-//     }
-// }
+function get_movie_genres() {
+    // Initiate Request
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "http://localhost:8000/api/v1/genres/");
+    xhr.send();
+
+    // Initiate variables
+    // let genres = [];
+    let next = 'ok';
+
+    // Request Onload
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            data = JSON.parse(xhr.responseText);
+            // Fill in genres variable
+            for (let genre in data.results) {
+                genres.push(data.results[genre]);
+            }
+            // Check if next page exist
+            next = data.next;
+            if (next != null) {
+                xhr.open("GET", next);
+                xhr.send();
+            }
+        } else if (xhr.status === 404) {
+            console.log("No records found")
+        }
+        // console.log(genres)
+        // return genres
+    }
+}
+
+get_movie_genres();
+console.log(genres);
 
 
 // Get the modal
@@ -72,7 +94,6 @@ var modal__trigger_elements = document.querySelectorAll(".modal__trigger");
 
 // Get the <span> element that closes the modal
 var span_elements = document.querySelectorAll(".close");
-console.log(span_elements.length);
 
 // When the user clicks on the modal__triggers, open the modal
 for (let i = 0; i < modal__trigger_elements.length; i++) {
@@ -94,7 +115,7 @@ window.onclick = function (event) {
         }
     }
 }
-
+// When the user press EscapeKey, close it
 window.addEventListener('keydown', function (event) {
     for (let i = 0; i < modal_elements.length; i++) {
         if (event.key === 'Escape') {
