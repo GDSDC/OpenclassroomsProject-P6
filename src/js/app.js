@@ -90,14 +90,14 @@ function get_movies_filtered(filter_input) {
 }
 
 movies_action = get_movies_filtered('imdb_score_min=8.8&genre=Action');
-movies_musical = get_movies_filtered('imdb_score_min=8.8&genre=ActionMusical');
-movies_trhiller = get_movies_filtered('imdb_score_min=8.8&genre=ActionThriller');
+movies_musical = get_movies_filtered('imdb_score_min=8.8&genre=Musical');
+movies_trhiller = get_movies_filtered('imdb_score_min=8.8&genre=Thriller');
 best_rated_movies = get_movies_filtered('imdb_score_min=9');
 
 delay(500).then(() => console.log(movies_action));
 delay(500).then(() => console.log(movies_musical));
 delay(500).then(() => console.log(movies_trhiller));
-delay(500).then(() => console.log(best_rated_movies));
+delay(250).then(() => console.log(best_rated_movies));
 
 
 // Get the modal
