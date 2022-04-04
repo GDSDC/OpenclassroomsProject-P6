@@ -65,7 +65,7 @@ function get_movies_filtered(filter_input) {
     xhr.send();
 
 // Initiate variables
-    let movies_by_genre = [];
+    let movies_filtered = [];
     let next = 'ok';
 
 // Request Onload
@@ -74,7 +74,7 @@ function get_movies_filtered(filter_input) {
             data = JSON.parse(xhr.responseText);
             // Fill in genres variable
             for (let movie in data.results) {
-                movies_by_genre.push(data.results[movie]);
+                movies_filtered.push(data.results[movie]);
             }
             // Check if next page exist
             next = data.next;
@@ -86,7 +86,7 @@ function get_movies_filtered(filter_input) {
             console.log("No records found")
         }
     }
-    return movies_by_genre;
+    return movies_filtered;
 }
 
 movies_action = get_movies_filtered('imdb_score_min=8.8&genre=Action');
@@ -99,6 +99,46 @@ delay(500).then(() => console.log(movies_musical));
 delay(500).then(() => console.log(movies_trhiller));
 delay(250).then(() => console.log(best_rated_movies));
 
+const test =  {
+            "id": 9,
+            "url": "http://localhost:8000/api/v1/titles/9",
+            "imdb_url": "https://www.imdb.com/title/tt0000009/",
+            "title": "Miss Jerry",
+            "year": 1894,
+            "imdb_score": "6.0",
+            "votes": 154,
+            "image_url": "https://m.media-amazon.com/images/M/MV5BNjA5Y2ZhYzctNDc1Yy00OGViLWI3NGUtOTYwZmE3NDFiYmIxXkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_UY268_CR72,0,182,268_AL_.jpg",
+            "directors": [
+                "Alexander Black"
+            ],
+            "actors": [
+                "Blanche Bayliss",
+                "Chauncey Depew",
+                "William Courtenay"
+            ],
+            "writers": [
+                "Alexander Black"
+            ],
+            "genres": [
+                "Romance"
+            ]
+        };
+test2 = JSON.parse(test);
+
+var section_test = document.getElementById('top_rated_movies_section');
+var modal_content_test = section_test.getElementsByClassName('modal-content')[0];
+delay(1000).then(() => update_modal_content(modal_content_test,test2));
+
+
+function update_modal_content(modal_content_element,movie_data){
+    // movie thumbnail
+    let modal__movie__thumbnail_element = movie_data.getElementsByClassName('modal__movie__thumbnail');
+    modal__movie__thumbnail_element.src = movie_data.image_url;
+
+    // movie__title
+    let movie__title_element = movie_data.getElementsByClassName('movie__title');
+    movie__title_element.textContent = 'Titre : ' + movie_data.title;
+}
 
 // Get the modal
 var modal_elements = document.querySelectorAll(".modal");
