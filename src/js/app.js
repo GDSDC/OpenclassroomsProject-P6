@@ -58,10 +58,10 @@ function delay(time) {
 delay(100).then(() => console.log(genres));
 
 
-function get_movies_by_genre(genre_input) {
+function get_movies_filtered(filter_input) {
 // Initiate Request
     let xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://localhost:8000/api/v1/titles/?imdb_score_min=8.8&genre=" + genre_input);
+    xhr.open("GET", "http://localhost:8000/api/v1/titles/?" + filter_input);
     xhr.send();
 
 // Initiate variables
@@ -89,13 +89,15 @@ function get_movies_by_genre(genre_input) {
     return movies_by_genre;
 }
 
-movies_action = get_movies_by_genre('Action');
-movies_musical = get_movies_by_genre('Musical');
-movies_trhiller = get_movies_by_genre('Thriller');
+movies_action = get_movies_filtered('imdb_score_min=8.8&genre=Action');
+movies_musical = get_movies_filtered('imdb_score_min=8.8&genre=ActionMusical');
+movies_trhiller = get_movies_filtered('imdb_score_min=8.8&genre=ActionThriller');
+best_rated_movies = get_movies_filtered('imdb_score_min=9');
 
 delay(500).then(() => console.log(movies_action));
 delay(500).then(() => console.log(movies_musical));
 delay(500).then(() => console.log(movies_trhiller));
+delay(500).then(() => console.log(best_rated_movies));
 
 
 // Get the modal
