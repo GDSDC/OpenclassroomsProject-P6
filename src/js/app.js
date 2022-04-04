@@ -123,7 +123,7 @@ const test =  {
                 "Romance"
             ]
         };
-test2 = JSON.parse(test);
+
 
 var section_test = document.getElementById('top_rated_movies_section');
 var modal_content_test = section_test.getElementsByClassName('modal-content')[0];
