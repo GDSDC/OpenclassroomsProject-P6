@@ -514,20 +514,20 @@ function generate_modal_HTML(id) {
     let modal_HTML_output = `<!-- Modal content -->
     <div class="modal-content">
         <div>
-            <img class="modal__movie__thumbnail" src="assets/` + movie + `_placeholder.png"/>
-            <p class="movie__title">Titre : ` + movie + `_TITLE_placeholder</p>
-            <p class="movie__genres">Genre Complet : ` + movie + `_GENRES_placeholder</p>
-            <p class="movie__year">Date de sortie : ` + movie + `_YEAR_placeholder</p>
-            <p class="movie__rated">Rated : ` + movie + `_RATED_placeholder</p>
-            <p class="movie__imdb_score">Score Imdb : ` + movie + `_IMDB_SCORE_placeholder</p>
+            <img id="modal-movie-thumbnail" class="modal__movie__thumbnail" src="assets/` + movie + `_placeholder.png"/>
+            <p id="movie-title" class="movie__title">Titre : ` + movie + `_TITLE_placeholder</p>
+            <p id="movie_genres" class="movie__genres">Genre Complet : ` + movie + `_GENRES_placeholder</p>
+            <p id= "movie-year" class="movie__year">Date de sortie : ` + movie + `_YEAR_placeholder</p>
+            <p id="movie-rated" class="movie__rated">Rated : ` + movie + `_RATED_placeholder</p>
+            <p id="movie-imdb-score" class="movie__imdb_score">Score Imdb : ` + movie + `_IMDB_SCORE_placeholder</p>
         </div>
         <div>
-            <p class="movie__directors">Réalisateur : ` + movie + `_DIRECTORS_placeholder</p>
-            <p class="movie__actors">Liste des acteurs : ` + movie + `_ACTORS_placeholder</p>
-            <p class="movie__duration">Durée : ` + movie + `_DURATION_placeholder</p>
-            <p class="movie__country">Pays d\'origine : ` + movie + `_COUNTRY_placeholder</p>
-            <p class="movie__box_office_score">Résultat au Box Office : ` + movie + `_BOX_OFFICE_SCORE_placeholder</p>
-            <p class="movie__summary">Résumé du film : ` + movie + `_SUMMARY_placeholder</p>
+            <p id="movie-directors" class="movie__directors">Réalisateur : ` + movie + `_DIRECTORS_placeholder</p>
+            <p id="movie-actors" class="movie__actors">Liste des acteurs : ` + movie + `_ACTORS_placeholder</p>
+            <p id="movie-duration" class="movie__duration">Durée : ` + movie + `_DURATION_placeholder</p>
+            <p id="movie-country" class="movie__country">Pays d\'origine : ` + movie + `_COUNTRY_placeholder</p>
+            <p id="movie-box-office-score" class="movie__box_office_score">Résultat au Box Office : ` + movie + `_BOX_OFFICE_SCORE_placeholder</p>
+            <p id="movie-summary" class="movie__summary">Résumé du film : ` + movie + `_SUMMARY_placeholder</p>
         </div>
         <span class="close">&times;</span>
     </div>`
