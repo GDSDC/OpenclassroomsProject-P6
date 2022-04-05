@@ -1,11 +1,28 @@
 const movies_ids = ["best_movie", "top_rated_movie_1", "top_rated_movie_2", "top_rated_movie_3", "top_rated_movie_4", "top_rated_movie_5", "top_rated_movie_6", "top_rated_movie_7", "category_1_movie_1", "category_1_movie_2", "category_1_movie_3", "category_1_movie_4", "category_1_movie_5", "category_1_movie_6", "category_1_movie_7", "category_2_movie_1", "category_2_movie_2", "category_2_movie_3", "category_2_movie_4", "category_2_movie_5", "category_2_movie_6", "category_2_movie_7", "category_3_movie_1", "category_3_movie_2", "category_3_movie_3", "category_3_movie_4", "category_3_movie_5", "category_3_movie_6", "category_3_movie_7"]
 
-function get_movies_images_json() {
-    return fetch("src/tests/img/JSON/movies_images.json")
+async function get_movies_images_json() {
+    /**
+     *  fetch(url)
+     *      .then((response) => doStuff(response))
+     *      .catch((error) => handleError(error))
+     *  <=>
+     *  let xhr = new XMLHttpRequest();
+     *  xhr.open("GET", "http://localhost:8000/api/v1/genres/");
+     *  xhr.send();
+     *  xhr.onload = function () {... doStuff(xhr.parse...)}
+     */
+
+
+
+    let promise = fetch("src/tests/img/JSON/movies_images.json")
         .then(response => {
             return response.json();
         })
         .then(data => console.log(data));
+
+    let jsonResult = await promise
+
+    return jsonResult
 }
 
 
@@ -433,11 +450,33 @@ const movie_details_test = {
 var best_rated_movies_details = [];
 
 
+function fillCategory(category, moviesJson) {
+    let section = document.querySelector(`#carousel_${category}`)
+
+    for (let htmlChildrenMovie in section.carousel) {
+        // Fill every html node with image + title based on json data
+        htmlChildrenMovie.title.text = moviesJson.movies[i].title
+        // TODO
+    }
+
+}
+
 window.onload = function () {
 
     // for (let i = 0; i < 7; i++) {
     //     best_rated_movies_details.push(get_movie_details(category_movies_test[i].id));
     // }
+    let category1 = document.querySelector('#category_1_section')
+    category1.children
+
+    categories.forEach((category) => {
+        fetch(`localhost:8080/api/v1/movies?categoryId=${category}`)
+            .then((response) => {
+                if (response.status === 200) {
+                    fillCategory(category, response.json())
+                }
+            })
+    })
 
     console.log(movies_action);
     console.log(movies_musical);
@@ -510,23 +549,25 @@ var modal_elements = document.querySelectorAll(".modal");
 
 // Generate HTML modal template
 function generate_modal_HTML(id) {
+    let movie = movies_ids[id];
+    // TODO replace clases by ids
     let modal_HTML_output = `<!-- Modal content -->
     <div class="modal-content">
         <div>
-            <img class="modal__movie__thumbnail" src="assets/` + movies_ids[id] + `_placeholder.png"/>
-            <p class="movie__title">Titre : ` + movies_ids[id] + `_TITLE_placeholder</p>
-            <p class="movie__genres">Genre Complet : ` + movies_ids[id] + `_GENRES_placeholder</p>
-            <p class="movie__year">Date de sortie : ` + movies_ids[id] + `_YEAR_placeholder</p>
-            <p class="movie__rated">Rated : ` + movies_ids[id] + `_RATED_placeholder</p>
-            <p class="movie__imdb_score">Score Imdb : ` + movies_ids[id] + `_IMDB_SCORE_placeholder</p>
+            <img class="modal__movie__thumbnail" src="assets/` + movie + `_placeholder.png"/>
+            <p id="modal-title" class="movie__title">Titre : ` + movie + `_TITLE_placeholder</p>
+            <p id="modal-genres" class="movie__genres">Genre Complet : ` + movie + `_GENRES_placeholder</p>
+            <p id="modal-year" class="movie__year">Date de sortie : ` + movie + `_YEAR_placeholder</p>
+            <p id="modal-rating" class="movie__rated">Rated : ` + movie + `_RATED_placeholder</p>
+            <p class="movie__imdb_score">Score Imdb : ` + movie + `_IMDB_SCORE_placeholder</p>
         </div>
         <div>
-            <p class="movie__directors">Réalisateur : ` + movies_ids[id] + `_DIRECTORS_placeholder</p>
-            <p class="movie__actors">Liste des acteurs : ` + movies_ids[id] + `_ACTORS_placeholder</p>
-            <p class="movie__duration">Durée : ` + movies_ids[id] + `_DURATION_placeholder</p>
-            <p class="movie__country">Pays d\'origine : ` + movies_ids[id] + `_COUNTRY_placeholder</p>
-            <p class="movie__box_office_score">Résultat au Box Office : ` + movies_ids[id] + `_BOX_OFFICE_SCORE_placeholder</p>
-            <p class="movie__summary">Résumé du film : ` + movies_ids[id] + `_SUMMARY_placeholder</p>
+            <p class="movie__directors">Réalisateur : ` + movie + `_DIRECTORS_placeholder</p>
+            <p class="movie__actors">Liste des acteurs : ` + movie + `_ACTORS_placeholder</p>
+            <p class="movie__duration">Durée : ` + movie + `_DURATION_placeholder</p>
+            <p class="movie__country">Pays d\"origine : ` + movie + `_COUNTRY_placeholder</p>
+            <p class="movie__box_office_score">Résultat au Box Office : ` + movie + `_BOX_OFFICE_SCORE_placeholder</p>
+            <p class="movie__summary">Résumé du film : ` + movie + `_SUMMARY_placeholder</p>
         </div>
         <span class="close">&times;</span>
     </div>`
