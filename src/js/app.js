@@ -8,6 +8,15 @@ function getMoviesImagesJson() {
         .then(data => console.log(data));
 }
 
+async function getMoviesFilteredTEST(filter_input) {
+
+    let promise = fetch("http://localhost:8000/api/v1/titles/?" + filter_input)
+        .then(response => {
+            return response.json();
+        })
+    let jsonResult = await promise;
+    return jsonResult;
+}
 
 function getMovieImage(id) {
     let movieImg = document.createElement("img");
