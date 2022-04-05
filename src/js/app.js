@@ -1,6 +1,6 @@
-const movies_ids = ["best_movie", "top_rated_movie_1", "top_rated_movie_2", "top_rated_movie_3", "top_rated_movie_4", "top_rated_movie_5", "top_rated_movie_6", "top_rated_movie_7", "category_1_movie_1", "category_1_movie_2", "category_1_movie_3", "category_1_movie_4", "category_1_movie_5", "category_1_movie_6", "category_1_movie_7", "category_2_movie_1", "category_2_movie_2", "category_2_movie_3", "category_2_movie_4", "category_2_movie_5", "category_2_movie_6", "category_2_movie_7", "category_3_movie_1", "category_3_movie_2", "category_3_movie_3", "category_3_movie_4", "category_3_movie_5", "category_3_movie_6", "category_3_movie_7"]
+const moviesIds = ["best_movie", "top_rated_movie_1", "top_rated_movie_2", "top_rated_movie_3", "top_rated_movie_4", "top_rated_movie_5", "top_rated_movie_6", "top_rated_movie_7", "category_1_movie_1", "category_1_movie_2", "category_1_movie_3", "category_1_movie_4", "category_1_movie_5", "category_1_movie_6", "category_1_movie_7", "category_2_movie_1", "category_2_movie_2", "category_2_movie_3", "category_2_movie_4", "category_2_movie_5", "category_2_movie_6", "category_2_movie_7", "category_3_movie_1", "category_3_movie_2", "category_3_movie_3", "category_3_movie_4", "category_3_movie_5", "category_3_movie_6", "category_3_movie_7"]
 
-function get_movies_images_json() {
+function getMoviesImagesJson() {
     return fetch("src/tests/img/JSON/movies_images.json")
         .then(response => {
             return response.json();
@@ -9,16 +9,16 @@ function get_movies_images_json() {
 }
 
 
-function get_movie_image(id) {
-    let movie_img = document.createElement("img");
-    movie_img.src = "src/tests/img/PNG/" + id + ".png";
-    movie_img.className = "thumbnail"
-    return movie_img;
+function getMovieImage(id) {
+    let movieImg = document.createElement("img");
+    movieImg.src = "src/tests/img/PNG/" + id + ".png";
+    movieImg.className = "thumbnail"
+    return movieImg;
 }
 
 // var genres = [];
 
-function get_movie_genres() {
+function getMovieGenres() {
 // Initiate Request
     let xhr = new XMLHttpRequest();
     xhr.open("GET", "http://localhost:8000/api/v1/genres/");
@@ -49,7 +49,7 @@ function get_movie_genres() {
     return genres;
 }
 
-genres = get_movie_genres();
+genres = getMovieGenres();
 
 function delay(time) {
     return new Promise(resolve => setTimeout(resolve, time));
@@ -58,14 +58,14 @@ function delay(time) {
 delay(100).then(() => console.log(genres));
 
 
-function get_movies_filtered(filter_input) {
+function getMoviesFiltered(filter_input) {
 // Initiate Request
     let xhr = new XMLHttpRequest();
     xhr.open("GET", "http://localhost:8000/api/v1/titles/?" + filter_input);
     xhr.send();
 
 // Initiate variables
-    let movies_filtered = [];
+    let moviesFiltered = [];
     let next = 'ok';
 
 // Request Onload
@@ -74,7 +74,7 @@ function get_movies_filtered(filter_input) {
             data = JSON.parse(xhr.responseText);
             // Fill in genres variable
             for (let movie in data.results) {
-                movies_filtered.push(data.results[movie]);
+                moviesFiltered.push(data.results[movie]);
             }
             // Check if next page exist
             next = data.next;
@@ -86,36 +86,36 @@ function get_movies_filtered(filter_input) {
             console.log("No records found")
         }
     }
-    return movies_filtered;
+    return moviesFiltered;
 }
 
-function get_movie_details(movie_id) {
+function getMovieDetails(movie_id) {
 // Initiate Request
     let xhr = new XMLHttpRequest();
     xhr.open("GET", "http://localhost:8000/api/v1/titles/" + movie_id);
     xhr.send();
 
 // Initiate variables
-    let movie_details = [];
+    let movieDetails = [];
 
 // Request Onload
     xhr.onload = function () {
         if (xhr.status === 200) {
             // Fill in movie details
-            movie_details.push(xhr.responseText);
+            movieDetails.push(xhr.responseText);
         } else if (xhr.status === 404) {
             console.log("No records found")
         }
     }
-    return movie_details[0];
+    return movieDetails[0];
 }
 
-movies_action = get_movies_filtered('imdb_score_min=8.8&genre=Action');
-movies_musical = get_movies_filtered('imdb_score_min=8.8&genre=Musical');
-movies_trhiller = get_movies_filtered('imdb_score_min=8.8&genre=Thriller');
-best_rated_movies = get_movies_filtered('imdb_score_min=9');
+moviesAction = getMoviesFiltered('imdb_score_min=8.8&genre=Action');
+moviesMusical = getMoviesFiltered('imdb_score_min=8.8&genre=Musical');
+moviesTrhiller = getMoviesFiltered('imdb_score_min=8.8&genre=Thriller');
+bestRatedMovies = getMoviesFiltered('imdb_score_min=9');
 
-const category_movies_test = [
+const categoryMoviesTest = [
     {
         "id": 50083,
         "url": "http://localhost:8000/api/v1/titles/50083",
@@ -375,7 +375,7 @@ const category_movies_test = [
     }
 ];
 
-const movie_details_test = {
+const movieDetailsTest = {
     "id": 50083,
     "url": "http://localhost:8000/api/v1/titles/50083",
     "title": "La parola ai giurati",
@@ -430,7 +430,7 @@ const movie_details_test = {
     "company": "Orion-Nova Productions"
 };
 
-var best_rated_movies_details = [];
+var bestRatedMoviesDetails = [];
 
 
 window.onload = function () {
@@ -439,70 +439,70 @@ window.onload = function () {
     //     best_rated_movies_details.push(get_movie_details(category_movies_test[i].id));
     // }
 
-    console.log(movies_action);
-    console.log(movies_musical);
-    console.log(movies_trhiller);
-    console.log(best_rated_movies);
-    console.log(best_rated_movies_details);
+    console.log(moviesAction);
+    console.log(moviesMusical);
+    console.log(moviesTrhiller);
+    console.log(bestRatedMovies);
+    console.log(bestRatedMoviesDetails);
 
-    var section_test = document.getElementById('top_rated_movies_section');
-    var modal_content_test = section_test.getElementsByClassName('modal-content');
-    update_modal_content(modal_content_test[0], movie_details_test);
+    var sectionTest = document.getElementById('top_rated_movies_section');
+    var modalContentTest = sectionTest.getElementsByClassName('modal-content');
+    update_modal_content(modalContentTest[0], movieDetailsTest);
 
-    // for (let i = 0; i < modal_content_test.length; i++) {
-    //     update_modal_content(modal_content_test[i], best_rated_movies_details[i]);
+    // for (let i = 0; i < modalContentTest.length; i++) {
+    //     update_modal_content(modalContentTest[i], best_rated_movies_details[i]);
     // }
 }
 
 
-function update_modal_content(modal_content_element, movie_data) {
+function update_modal_content(modalContentElement, movieData) {
     // movie thumbnail
-    let modal__movie__thumbnail_element = modal_content_element.getElementsByClassName('modal__movie__thumbnail')[0];
-    modal__movie__thumbnail_element.src = movie_data.image_url;
+    let modalMovieThumbnailElement = modalContentElement.getElementsByClassName('modal__movie__thumbnail')[0];
+    modalMovieThumbnailElement.src = movieData.image_url;
 
     // movie__title
-    let movie__title_element = modal_content_element.getElementsByClassName('movie__title')[0];
-    movie__title_element.textContent = 'Titre : ' + movie_data.title;
+    let movie__titleElement = modalContentElement.getElementsByClassName('movie__title')[0];
+    movie__titleElement.textContent = 'Titre : ' + movieData.title;
 
     // movie__genres
-    let movie__genres_element = modal_content_element.getElementsByClassName('movie__genres')[0];
-    movie__genres_element.textContent = 'Genre Complet : ' + movie_data.genres;
+    let movie__genresElement = modalContentElement.getElementsByClassName('movie__genres')[0];
+    movie__genresElement.textContent = 'Genre Complet : ' + movieData.genres;
 
     // movie__year
-    let movie__year_element = modal_content_element.getElementsByClassName('movie__year')[0];
-    movie__year_element.textContent = 'Date de sortie : ' + movie_data.year;
+    let movie__yearElement = modalContentElement.getElementsByClassName('movie__year')[0];
+    movie__yearElement.textContent = 'Date de sortie : ' + movieData.year;
 
     // movie__rated
-    let movie__rated_element = modal_content_element.getElementsByClassName('movie__rated')[0];
-    movie__rated_element.textContent = 'Rated : ' + movie_data.rated;
+    let movie__ratedElement = modalContentElement.getElementsByClassName('movie__rated')[0];
+    movie__ratedElement.textContent = 'Rated : ' + movieData.rated;
 
     // movie__imdb_score
-    let movie__imdb_score_element = modal_content_element.getElementsByClassName('movie__imdb_score')[0];
-    movie__imdb_score_element.textContent = 'Score Imdb : ' + movie_data.imdb_score;
+    let movie__imdb_scoreElement = modalContentElement.getElementsByClassName('movie__imdb_score')[0];
+    movie__imdb_scoreElement.textContent = 'Score Imdb : ' + movieData.imdb_score;
 
     // movie__directors
-    let movie__directors_element = modal_content_element.getElementsByClassName('movie__directors')[0];
-    movie__directors_element.textContent = 'Réalisateur : ' + movie_data.directors;
+    let movie__directorsElement = modalContentElement.getElementsByClassName('movie__directors')[0];
+    movie__directorsElement.textContent = 'Réalisateur : ' + movieData.directors;
 
     // movie__actors
-    let movie__actors_element = modal_content_element.getElementsByClassName('movie__actors')[0];
-    movie__actors_element.textContent = 'Liste des acteurs : ' + movie_data.actors;
+    let movie__actorsElement = modalContentElement.getElementsByClassName('movie__actors')[0];
+    movie__actorsElement.textContent = 'Liste des acteurs : ' + movieData.actors;
 
     // movie__duration
-    let movie__duration_element = modal_content_element.getElementsByClassName('movie__duration')[0];
-    movie__duration_element.textContent = 'Durée :  ' + movie_data.duration + ' minutes';
+    let movie__durationElement = modalContentElement.getElementsByClassName('movie__duration')[0];
+    movie__durationElement.textContent = 'Durée :  ' + movieData.duration + ' minutes';
 
     // movie__country
-    let movie__country_element = modal_content_element.getElementsByClassName('movie__country')[0];
-    movie__country_element.textContent = 'Pays d\'origine : ' + movie_data.countries;
+    let movie__countryElement = modalContentElement.getElementsByClassName('movie__country')[0];
+    movie__countryElement.textContent = 'Pays d\'origine : ' + movieData.countries;
 
     // movie__box_office_score
-    let movie__box_office_score_element = modal_content_element.getElementsByClassName('movie__box_office_score')[0];
-    movie__box_office_score_element.textContent = 'Résultat au Box Office : ' + movie_data.worldwide_gross_income + ' $';
+    let movie__box_office_scoreElement = modalContentElement.getElementsByClassName('movie__box_office_score')[0];
+    movie__box_office_scoreElement.textContent = 'Résultat au Box Office : ' + movieData.worldwide_gross_income + ' $';
 
     // movie__summary
-    let movie__summary_element = modal_content_element.getElementsByClassName('movie__summary')[0];
-    movie__summary_element.textContent = 'Résumé du film : ' + movie_data.long_description;
+    let movie__summaryElement = modalContentElement.getElementsByClassName('movie__summary')[0];
+    movie__summaryElement.textContent = 'Résumé du film : ' + movieData.long_description;
 }
 
 // Get the modal
@@ -510,7 +510,7 @@ var modal_elements = document.querySelectorAll(".modal");
 
 // Generate HTML modal template
 function generate_modal_HTML(id) {
-    let movie = movies_ids[id];
+    let movie = moviesIds[id];
     let modal_HTML_output = `<!-- Modal content -->
     <div class="modal-content">
         <div>
