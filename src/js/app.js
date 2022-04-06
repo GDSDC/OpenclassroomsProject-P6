@@ -117,7 +117,7 @@ async function getAllMoviesFilteredDetailsPromise(filter_input) {
     let secondHalf = getMovieFilteredPromise(filter_input + '&page=2')
 
     // First Half of data
-    let firstHalfresult = firstHalf.then((value => {
+    let firstHalfResult = firstHalf.then((value => {
         let result = [];
         for (let movie of value) {
             result.push(getMovieDetailsPromise(movie.id));
@@ -126,7 +126,7 @@ async function getAllMoviesFilteredDetailsPromise(filter_input) {
     }));
 
     // Second Half of data
-    let secondHalfresult = secondHalf.then((value => {
+    let secondHalfResult = secondHalf.then((value => {
         let result = [];
         for (let movie of value) {
             result.push(getMovieDetailsPromise(movie.id));
@@ -135,7 +135,7 @@ async function getAllMoviesFilteredDetailsPromise(filter_input) {
     }));
 
 
-    return [firstHalfresult,secondHalfresult];
+    return [firstHalfResult,secondHalfResult];
 }
 
 async function getMovieDetailsPromise(movieId) {
