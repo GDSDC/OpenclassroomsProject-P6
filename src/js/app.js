@@ -98,8 +98,47 @@ function getMoviesFiltered(filter_input) {
     return moviesFiltered;
 }
 
+async function getMovieFilteredPromise(filter_input) {
 
-async function getMovieDetails_Promise(movieId) {
+    let resultJson = await fetch("http://localhost:8000/api/v1/titles/?" + filter_input)
+        .then(response => {
+            return response.json();
+        })
+        .then((value) => {
+            return value.results;
+        });
+
+    return resultJson;
+}
+
+async function getAllMoviesFilteredDetailsPromise(filter_input) {
+    // Initialization
+    let firstHalf = getMovieFilteredPromise(filter_input);
+    let secondHalf = getMovieFilteredPromise(filter_input + '&page=2')
+
+    // First Half of data
+    let firstHalfresult = firstHalf.then((value => {
+        let result = [];
+        for (let movie of value) {
+            result.push(getMovieDetailsPromise(movie.id));
+        }
+        return result;
+    }));
+
+    // Second Half of data
+    let secondHalfresult = secondHalf.then((value => {
+        let result = [];
+        for (let movie of value) {
+            result.push(getMovieDetailsPromise(movie.id));
+        }
+        return result;
+    }));
+
+
+    return [firstHalfresult,secondHalfresult];
+}
+
+async function getMovieDetailsPromise(movieId) {
     let resultJson = await fetch("http://localhost:8000/api/v1/titles/" + movieId)
         .then(response => {
             return response.json();
@@ -451,7 +490,7 @@ window.onload = function () {
 
     var sectionTest = document.getElementById('top_rated_movies_section');
     var modalContentTest = sectionTest.getElementsByClassName('modal-content');
-    var avatarPromise = getMovieDetails_Promise('499549');
+    var avatarPromise = getMovieDetailsPromise('499549');
     update_modal_content(modalContentTest[0], avatarPromise);
 
     // for (let i = 0; i < modalContentTest.length; i++) {
