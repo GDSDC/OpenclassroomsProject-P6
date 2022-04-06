@@ -1,102 +1,3 @@
-const moviesIds = ["best_movie", "top_rated_movie_1", "top_rated_movie_2", "top_rated_movie_3", "top_rated_movie_4", "top_rated_movie_5", "top_rated_movie_6", "top_rated_movie_7", "category_1_movie_1", "category_1_movie_2", "category_1_movie_3", "category_1_movie_4", "category_1_movie_5", "category_1_movie_6", "category_1_movie_7", "category_2_movie_1", "category_2_movie_2", "category_2_movie_3", "category_2_movie_4", "category_2_movie_5", "category_2_movie_6", "category_2_movie_7", "category_3_movie_1", "category_3_movie_2", "category_3_movie_3", "category_3_movie_4", "category_3_movie_5", "category_3_movie_6", "category_3_movie_7"]
-
-function getMoviesImagesJson() {
-    return fetch("src/tests/img/JSON/movies_images.json")
-        .then(response => {
-            return response.json();
-        })
-        .then(data => console.log(data));
-}
-
-async function getMoviesFilteredTEST(filter_input) {
-
-    let promise = fetch("http://localhost:8000/api/v1/titles/?" + filter_input)
-        .then(response => {
-            return response.json();
-        })
-    let jsonResult = await promise;
-    return jsonResult;
-}
-
-function getMovieImage(id) {
-    let movieImg = document.createElement("img");
-    movieImg.src = "src/tests/img/PNG/" + id + ".png";
-    movieImg.className = "thumbnail"
-    return movieImg;
-}
-
-// var genres = [];
-
-function getMovieGenres() {
-// Initiate Request
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://localhost:8000/api/v1/genres/");
-    xhr.send();
-
-// Initiate variables
-    let genres = [];
-    let next = 'ok';
-
-// Request Onload
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            data = JSON.parse(xhr.responseText);
-            // Fill in genres variable
-            for (let genre in data.results) {
-                genres.push(data.results[genre]);
-            }
-            // Check if next page exist
-            next = data.next;
-            if (next != null) {
-                xhr.open("GET", next);
-                xhr.send();
-            }
-        } else if (xhr.status === 404) {
-            console.log("No records found")
-        }
-    }
-    return genres;
-}
-
-genres = getMovieGenres();
-
-function delay(time) {
-    return new Promise(resolve => setTimeout(resolve, time));
-}
-
-delay(100).then(() => console.log(genres));
-
-
-function getMoviesFiltered(filter_input) {
-// Initiate Request
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://localhost:8000/api/v1/titles/?" + filter_input);
-    xhr.send();
-
-// Initiate variables
-    let moviesFiltered = [];
-    let next = 'ok';
-
-// Request Onload
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            data = JSON.parse(xhr.responseText);
-            // Fill in genres variable
-            for (let movie in data.results) {
-                moviesFiltered.push(data.results[movie]);
-            }
-            // Check if next page exist
-            next = data.next;
-            if (next != null) {
-                xhr.open("GET", next);
-                xhr.send();
-            }
-        } else if (xhr.status === 404) {
-            console.log("No records found")
-        }
-    }
-    return moviesFiltered;
-}
 
 async function getMovieFilteredPromise(filter_input) {
 
@@ -180,6 +81,7 @@ function update_section(sectionId, moviesPromises) {
     // Section Selection
     let section = document.querySelector(`#${sectionId}`);
 
+    // Update thumbnails and modals
     let carouselElements = section.querySelectorAll('.carousel__movie');
 
     for (let i = 0; i < 5; i++) {
@@ -262,7 +164,7 @@ var modal_elements = document.querySelectorAll(".modal");
 
 // Generate HTML modal template
 function generate_modal_HTML(id) {
-    let movie = moviesIds[id];
+    let movie = ["best_movie", "top_rated_movie_1", "top_rated_movie_2", "top_rated_movie_3", "top_rated_movie_4", "top_rated_movie_5", "top_rated_movie_6", "top_rated_movie_7", "category_1_movie_1", "category_1_movie_2", "category_1_movie_3", "category_1_movie_4", "category_1_movie_5", "category_1_movie_6", "category_1_movie_7", "category_2_movie_1", "category_2_movie_2", "category_2_movie_3", "category_2_movie_4", "category_2_movie_5", "category_2_movie_6", "category_2_movie_7", "category_3_movie_1", "category_3_movie_2", "category_3_movie_3", "category_3_movie_4", "category_3_movie_5", "category_3_movie_6", "category_3_movie_7"];
     let modal_HTML_output = `<!-- Modal content -->
     <div class="modal-content">
         <div>
