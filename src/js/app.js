@@ -135,7 +135,7 @@ async function getAllMoviesFilteredDetailsPromise(filter_input) {
     }));
 
 
-    return [firstHalfResult,secondHalfResult];
+    return [firstHalfResult, secondHalfResult];
 }
 
 async function getMovieDetailsPromise(movieId) {
@@ -153,358 +153,62 @@ function getMovieDetails(moviePromiseResponse) {
     });
 }
 
-moviesAction = getMoviesFiltered('imdb_score_min=8.8&genre=Action');
-moviesMusical = getMoviesFiltered('imdb_score_min=8.8&genre=Musical');
-moviesTrhiller = getMoviesFiltered('imdb_score_min=8.8&genre=Thriller');
-bestRatedMovies = getMoviesFiltered('imdb_score_min=9');
-
-const categoryMoviesTest = [
-    {
-        "id": 50083,
-        "url": "http://localhost:8000/api/v1/titles/50083",
-        "imdb_url": "https://www.imdb.com/title/tt0050083/",
-        "title": "La parola ai giurati",
-        "year": 1957,
-        "imdb_score": "9.0",
-        "votes": 681074,
-        "image_url": "https://m.media-amazon.com/images/M/MV5BMWU4N2FjNzYtNTVkNC00NzQ0LTg0MjAtYTJlMjFhNGUxZDFmXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_UX182_CR0,0,182,268_AL_.jpg",
-        "directors": [
-            "Sidney Lumet"
-        ],
-        "actors": [
-            "E.G. Marshall",
-            "Ed Begley",
-            "Edward Binns",
-            "George Voskovec",
-            "Henry Fonda",
-            "Jack Klugman",
-            "Jack Warden",
-            "John Fiedler",
-            "Joseph Sweeney",
-            "Lee J. Cobb",
-            "Martin Balsam",
-            "Robert Webber"
-        ],
-        "writers": [
-            "Reginald Rose"
-        ],
-        "genres": [
-            "Crime",
-            "Drama"
-        ]
-    },
-    {
-        "id": 68646,
-        "url": "http://localhost:8000/api/v1/titles/68646",
-        "imdb_url": "https://www.imdb.com/title/tt0068646/",
-        "title": "Il padrino",
-        "year": 1972,
-        "imdb_score": "9.2",
-        "votes": 1598655,
-        "image_url": "https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_UY268_CR3,0,182,268_AL_.jpg",
-        "directors": [
-            "Francis Ford Coppola"
-        ],
-        "actors": [
-            "Abe Vigoda",
-            "Al Lettieri",
-            "Al Pacino",
-            "Diane Keaton",
-            "Gianni Russo",
-            "James Caan",
-            "John Cazale",
-            "John Marley",
-            "Marlon Brando",
-            "Richard Conte",
-            "Richard S. Castellano",
-            "Robert Duvall",
-            "Rudy Bond",
-            "Sterling Hayden",
-            "Talia Shire"
-        ],
-        "writers": [
-            "Francis Ford Coppola",
-            "Mario Puzo"
-        ],
-        "genres": [
-            "Crime",
-            "Drama"
-        ]
-    },
-    {
-        "id": 71562,
-        "url": "http://localhost:8000/api/v1/titles/71562",
-        "imdb_url": "https://www.imdb.com/title/tt0071562/",
-        "title": "Il padrino - Parte II",
-        "year": 1974,
-        "imdb_score": "9.0",
-        "votes": 1116614,
-        "image_url": "https://m.media-amazon.com/images/M/MV5BMWMwMGQzZTItY2JlNC00OWZiLWIyMDctNDk2ZDQ2YjRjMWQ0XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_UY268_CR3,0,182,268_AL_.jpg",
-        "directors": [
-            "Francis Ford Coppola"
-        ],
-        "actors": [
-            "Al Pacino",
-            "Bruno Kirby",
-            "Diane Keaton",
-            "Francesca De Sapio",
-            "Frank Sivero",
-            "G.D. Spradlin",
-            "Gastone Moschin",
-            "John Cazale",
-            "Lee Strasberg",
-            "Michael V. Gazzo",
-            "Richard Bright",
-            "Robert De Niro",
-            "Robert Duvall",
-            "Talia Shire",
-            "Tom Rosqui"
-        ],
-        "writers": [
-            "Francis Ford Coppola",
-            "Mario Puzo"
-        ],
-        "genres": [
-            "Crime",
-            "Drama"
-        ]
-    },
-    {
-        "id": 84302,
-        "url": "http://localhost:8000/api/v1/titles/84302",
-        "imdb_url": "https://www.imdb.com/title/tt0084302/",
-        "title": "Maratonci trce pocasni krug",
-        "year": 1982,
-        "imdb_score": "9.0",
-        "votes": 14295,
-        "image_url": "https://m.media-amazon.com/images/M/MV5BZmE4Njk2MWYtZDRlMy00OTAxLThlNWYtOTU3MGEwNTY4Nzc0XkEyXkFqcGdeQXVyMTAwNjUxNTkz._V1_UY268_CR6,0,182,268_AL_.jpg",
-        "directors": [
-            "Slobodan Sijan"
-        ],
-        "actors": [
-            "Bogdan Diklic",
-            "Bora Todorovic",
-            "Danilo 'Bata' Stojkovic",
-            "Dragoljub Milosavljevic-Gula",
-            "Fahro Konjhodzic",
-            "Jelisaveta 'Seka' Sablic",
-            "Melita Bihali",
-            "Mihajlo 'Bata' Paskaljevic",
-            "Mija Aleksic",
-            "Milivoje 'Mica' Tomic",
-            "Miroslav Jovanovic",
-            "Pavle Vuisic",
-            "Radislav Lazarevic",
-            "Veljko Mandic",
-            "Zoran Radmilovic"
-        ],
-        "writers": [
-            "Dusan Kovacevic"
-        ],
-        "genres": [
-            "Comedy",
-            "Drama"
-        ]
-    },
-    {
-        "id": 111161,
-        "url": "http://localhost:8000/api/v1/titles/111161",
-        "imdb_url": "https://www.imdb.com/title/tt0111161/",
-        "title": "Le ali della libertà",
-        "year": 1994,
-        "imdb_score": "9.3",
-        "votes": 2315277,
-        "image_url": "https://m.media-amazon.com/images/M/MV5BMDFkYTc0MGEtZmNhMC00ZDIzLWFmNTEtODM1ZmRlYWMwMWFmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_UX182_CR0,0,182,268_AL_.jpg",
-        "directors": [
-            "Frank Darabont"
-        ],
-        "actors": [
-            "Bob Gunton",
-            "Brian Libby",
-            "Clancy Brown",
-            "David Proval",
-            "Gil Bellows",
-            "James Whitmore",
-            "Jeffrey DeMunn",
-            "Joseph Ragno",
-            "Jude Ciccolella",
-            "Larry Brandenburg",
-            "Mark Rolston",
-            "Morgan Freeman",
-            "Neil Giuntoli",
-            "Tim Robbins",
-            "William Sadler"
-        ],
-        "writers": [
-            "Frank Darabont",
-            "Stephen King"
-        ],
-        "genres": [
-            "Drama"
-        ]
-    },
-    {
-        "id": 170783,
-        "url": "http://localhost:8000/api/v1/titles/170783",
-        "imdb_url": "https://www.imdb.com/title/tt0170783/",
-        "title": "Vchera",
-        "year": 1988,
-        "imdb_score": "9.0",
-        "votes": 3110,
-        "image_url": "https://m.media-amazon.com/images/M/MV5BNzYzMjcyMzA4NF5BMl5BanBnXkFtZTgwMjY5ODIxNjE@._V1_UY268_CR5,0,182,268_AL_.jpg",
-        "directors": [
-            "Ivan Andonov"
-        ],
-        "actors": [
-            "Boris Lukanov",
-            "Christine Bartlet",
-            "Dimitar Goranov",
-            "Georgi Rusev",
-            "Georgi Staykov",
-            "Hristo Shopov",
-            "Kosta Tsonev",
-            "Krasimir Rankov",
-            "Maria Stefanova",
-            "Nikola Rudarov",
-            "Pavel Popandov",
-            "Petar Popyordanov",
-            "Sofiya Kuzeva",
-            "Stoyan Aleksiev",
-            "Svetla Todorova"
-        ],
-        "writers": [
-            "Vlado Daverov"
-        ],
-        "genres": [
-            "Drama"
-        ]
-    },
-    {
-        "id": 247025,
-        "url": "http://localhost:8000/api/v1/titles/247025",
-        "imdb_url": "https://www.imdb.com/title/tt0247025/",
-        "title": "Voynata na taralezhite",
-        "year": 1979,
-        "imdb_score": "9.0",
-        "votes": 759,
-        "image_url": "https://m.media-amazon.com/images/M/MV5BMjEwMDIzOTc1NV5BMl5BanBnXkFtZTgwNDA0MDQxNjE@._V1_UX182_CR0,0,182,268_AL_.jpg",
-        "directors": [
-            "Ivanka Grybcheva"
-        ],
-        "actors": [
-            "Angel Lambev",
-            "Asen Kotsev",
-            "Dimitar Ganev",
-            "Dimitr Dimitrov",
-            "Greta Gancheva",
-            "Kliment Denchev",
-            "Lyudmila Cheshmedzhieva",
-            "Moris Assa",
-            "Ognian Zheliazkov",
-            "Stefan Danailov",
-            "Stoycho Mazgalov",
-            "Tzvetana Maneva",
-            "Valcho Kamarashev",
-            "Vassil Mihajlov",
-            "Yevgeniya Bozhikova"
-        ],
-        "writers": [
-            "Bratya Mormarevi",
-            "Miryana Basheva"
-        ],
-        "genres": [
-            "Comedy"
-        ]
-    }
-];
-
-const movieDetailsTest = {
-    "id": 50083,
-    "url": "http://localhost:8000/api/v1/titles/50083",
-    "title": "La parola ai giurati",
-    "original_title": "12 Angry Men",
-    "year": 1957,
-    "date_published": "1957-09-04",
-    "duration": 96,
-    "description": "A jury holdout attempts to prevent a miscarriage of justice by forcing his colleagues to reconsider the evidence.",
-    "long_description": "The defense and the prosecution have rested and the jury is filing into the jury room to decide if a young man is guilty or innocent of murdering his father. What begins as an open-and-shut case of murder soon becomes a detective story that presents a succession of clues creating doubt, and a mini-drama of each of the jurors' prejudices and preconceptions about the trial, the accused, and each other. Based on the play, all of the action takes place on the stage of the jury room.",
-    "avg_vote": "8.9",
-    "imdb_score": "9.0",
-    "votes": 681074,
-    "metascore": "96.0",
-    "budget": 350000,
-    "budget_currency": "USD",
-    "usa_gross_income": null,
-    "worldwide_gross_income": 576,
-    "reviews_from_users": 1605,
-    "reviews_from_critics": 149,
-    "image_url": "https://m.media-amazon.com/images/M/MV5BMWU4N2FjNzYtNTVkNC00NzQ0LTg0MjAtYTJlMjFhNGUxZDFmXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_UX182_CR0,0,182,268_AL_.jpg",
-    "actors": [
-        "E.G. Marshall",
-        "Ed Begley",
-        "Edward Binns",
-        "George Voskovec",
-        "Henry Fonda",
-        "Jack Klugman",
-        "Jack Warden",
-        "John Fiedler",
-        "Joseph Sweeney",
-        "Lee J. Cobb",
-        "Martin Balsam",
-        "Robert Webber"
-    ],
-    "directors": [
-        "Sidney Lumet"
-    ],
-    "writers": [
-        "Reginald Rose"
-    ],
-    "genres": [
-        "Crime",
-        "Drama"
-    ],
-    "countries": [
-        "USA"
-    ],
-    "languages": [
-        "English"
-    ],
-    "rated": "Not rated or unkown rating",
-    "company": "Orion-Nova Productions"
-};
-
-var bestRatedMoviesDetails = [];
+const moviesAction = getAllMoviesFilteredDetailsPromise('imdb_score_min=8.8&genre=Action');
+const moviesMusical = getAllMoviesFilteredDetailsPromise('imdb_score_min=8.8&genre=Musical');
+const moviesTrhiller = getAllMoviesFilteredDetailsPromise('imdb_score_min=8.8&genre=Thriller');
+const bestRatedMovies = getAllMoviesFilteredDetailsPromise('imdb_score_min=9');
 
 
 window.onload = function () {
 
-    // for (let i = 0; i < 7; i++) {
-    //     best_rated_movies_details.push(get_movie_details(category_movies_test[i].id));
-    // }
+    // Update top_rated_movies_section section
+    update_section('top_rated_movies_section', bestRatedMovies)
 
-    console.log(moviesAction);
-    console.log(moviesMusical);
-    console.log(moviesTrhiller);
-    console.log(bestRatedMovies);
-    console.log(bestRatedMoviesDetails);
+    // Update category_1_section section
+    update_section('category_1_section', moviesAction)
 
-    var sectionTest = document.getElementById('top_rated_movies_section');
-    var modalContentTest = sectionTest.getElementsByClassName('modal-content');
-    var avatarPromise = getMovieDetailsPromise('499549');
-    update_modal_content(modalContentTest[0], avatarPromise);
+    // Update category_2_section section
+    update_section('category_2_section', moviesMusical)
 
-    // for (let i = 0; i < modalContentTest.length; i++) {
-    //     update_modal_content(modalContentTest[i], best_rated_movies_details[i]);
-    // }
+    // Update category_3_section section
+    update_section('category_3_section', moviesTrhiller)
+
+
 }
 
+function update_section(sectionId, moviesPromises) {
+    // Section Selection
+    let section = document.querySelector(`#${sectionId}`);
 
-function update_modal_content(modalContentElement, moviePromiseResponse) {
+    let carouselElements = section.querySelectorAll('.carousel__movie');
+
+    for (let i = 0; i < 5; i++) {
+        let moviePromiseResponse = moviesPromises.then((value) => {
+            return value[0];
+        }).then((value) => {
+            return value[i];
+        });
+        update_movie_data(carouselElements[i], moviePromiseResponse);
+    }
+
+    for (let i = 0; i < 2; i++) {
+        let moviePromiseResponse = moviesPromises.then((value) => {
+            return value[1];
+        }).then((value) => {
+            return value[i];
+        });
+        update_movie_data(carouselElements[i + 5], moviePromiseResponse);
+    }
+
+
+}
+
+function update_movie_data(modalContentElement, moviePromiseResponse) {
 
     moviePromiseResponse.then((value) => {
         // movie thumbnail
-        let modalMovieThumbnailElement = modalContentElement.querySelector('#modal-movie-thumbnail');
-        modalMovieThumbnailElement.src = value.image_url;
+        let modalMovieThumbnailElement = modalContentElement.querySelectorAll("img");
+        modalMovieThumbnailElement.forEach(element => element.src = value.image_url);
 
         // movie-title
         let movieTitleElement = modalContentElement.querySelector('#movie-title');
