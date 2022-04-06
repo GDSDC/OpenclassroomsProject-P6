@@ -98,25 +98,13 @@ function getMoviesFiltered(filter_input) {
     return moviesFiltered;
 }
 
-function getMovieDetails(movie_id) {
-// Initiate Request
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://localhost:8000/api/v1/titles/" + movie_id);
-    xhr.send();
+async function getMovieDetails(movie_id) {
+    let resultJson = await fetch("http://localhost:8000/api/v1/titles/" + movie_id)
+        .then(response => {
+            return response.json();
+        });
 
-// Initiate variables
-    let movieDetails = [];
-
-// Request Onload
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            // Fill in movie details
-            movieDetails.push(xhr.responseText);
-        } else if (xhr.status === 404) {
-            console.log("No records found")
-        }
-    }
-    return movieDetails[0];
+    return resultJson;
 }
 
 moviesAction = getMoviesFiltered('imdb_score_min=8.8&genre=Action');
