@@ -98,13 +98,20 @@ function getMoviesFiltered(filter_input) {
     return moviesFiltered;
 }
 
-async function getMovieDetails(movie_id) {
-    let resultJson = await fetch("http://localhost:8000/api/v1/titles/" + movie_id)
+
+async function getMovieDetails_Promise(movieId) {
+    let resultJson = await fetch("http://localhost:8000/api/v1/titles/" + movieId)
         .then(response => {
             return response.json();
         });
 
     return resultJson;
+}
+
+function getMovieDetails(moviePromiseResponse) {
+    moviePromiseResponse.then((value) => {
+        console.log(value.id);
+    });
 }
 
 moviesAction = getMoviesFiltered('imdb_score_min=8.8&genre=Action');
@@ -444,7 +451,8 @@ window.onload = function () {
 
     var sectionTest = document.getElementById('top_rated_movies_section');
     var modalContentTest = sectionTest.getElementsByClassName('modal-content');
-    update_modal_content(modalContentTest[0], movieDetailsTest);
+    var avatarPromise = getMovieDetails_Promise('499549');
+    update_modal_content(modalContentTest[0], avatarPromise);
 
     // for (let i = 0; i < modalContentTest.length; i++) {
     //     update_modal_content(modalContentTest[i], best_rated_movies_details[i]);
@@ -452,54 +460,58 @@ window.onload = function () {
 }
 
 
-function update_modal_content(modalContentElement, movieData) {
-    // movie thumbnail
-    let modalMovieThumbnailElement = modalContentElement.getElementsByClassName('modal__movie__thumbnail')[0];
-    modalMovieThumbnailElement.src = movieData.image_url;
+function update_modal_content(modalContentElement, moviePromiseResponse) {
 
-    // movie__title
-    let movie__titleElement = modalContentElement.getElementsByClassName('movie__title')[0];
-    movie__titleElement.textContent = 'Titre : ' + movieData.title;
+    moviePromiseResponse.then((value) => {
+        // movie thumbnail
+        let modalMovieThumbnailElement = modalContentElement.querySelector('#modal-movie-thumbnail');
+        modalMovieThumbnailElement.src = value.image_url;
 
-    // movie__genres
-    let movie__genresElement = modalContentElement.getElementsByClassName('movie__genres')[0];
-    movie__genresElement.textContent = 'Genre Complet : ' + movieData.genres;
+        // movie-title
+        let movieTitleElement = modalContentElement.querySelector('#movie-title');
+        movieTitleElement.textContent = 'Titre : ' + value.title;
 
-    // movie__year
-    let movie__yearElement = modalContentElement.getElementsByClassName('movie__year')[0];
-    movie__yearElement.textContent = 'Date de sortie : ' + movieData.year;
+        // movie-genres
+        let movieGenresElement = modalContentElement.querySelector('#movie_genres');
+        movieGenresElement.textContent = 'Genre Complet : ' + value.genres;
 
-    // movie__rated
-    let movie__ratedElement = modalContentElement.getElementsByClassName('movie__rated')[0];
-    movie__ratedElement.textContent = 'Rated : ' + movieData.rated;
+        // movie-year
+        let movieYearElement = modalContentElement.querySelector('#movie-year');
+        movieYearElement.textContent = 'Date de sortie : ' + value.year;
 
-    // movie__imdb_score
-    let movie__imdb_scoreElement = modalContentElement.getElementsByClassName('movie__imdb_score')[0];
-    movie__imdb_scoreElement.textContent = 'Score Imdb : ' + movieData.imdb_score;
+        // movie-rated
+        let movieRatedElement = modalContentElement.querySelector('#movie-rated');
+        movieRatedElement.textContent = 'Rated : ' + value.rated;
 
-    // movie__directors
-    let movie__directorsElement = modalContentElement.getElementsByClassName('movie__directors')[0];
-    movie__directorsElement.textContent = 'Réalisateur : ' + movieData.directors;
+        // movie-imdb-score
+        let movieImdbScoreElement = modalContentElement.querySelector('#movie-imdb-score');
+        movieImdbScoreElement.textContent = 'Score Imdb : ' + value.imdb_score;
 
-    // movie__actors
-    let movie__actorsElement = modalContentElement.getElementsByClassName('movie__actors')[0];
-    movie__actorsElement.textContent = 'Liste des acteurs : ' + movieData.actors;
+        // movie-directors
+        let movieDirectorsElement = modalContentElement.querySelector('#movie-directors');
+        movieDirectorsElement.textContent = 'Réalisateur : ' + value.directors;
 
-    // movie__duration
-    let movie__durationElement = modalContentElement.getElementsByClassName('movie__duration')[0];
-    movie__durationElement.textContent = 'Durée :  ' + movieData.duration + ' minutes';
+        // movie-actors
+        let movieActorsElement = modalContentElement.querySelector('#movie-actors');
+        movieActorsElement.textContent = 'Liste des acteurs : ' + value.actors;
 
-    // movie__country
-    let movie__countryElement = modalContentElement.getElementsByClassName('movie__country')[0];
-    movie__countryElement.textContent = 'Pays d\'origine : ' + movieData.countries;
+        // movie-duration
+        let movieDurationElement = modalContentElement.querySelector('#movie-duration');
+        movieDurationElement.textContent = 'Durée :  ' + value.duration + ' minutes';
 
-    // movie__box_office_score
-    let movie__box_office_scoreElement = modalContentElement.getElementsByClassName('movie__box_office_score')[0];
-    movie__box_office_scoreElement.textContent = 'Résultat au Box Office : ' + movieData.worldwide_gross_income + ' $';
+        // movie-country
+        let movieCountryElement = modalContentElement.querySelector('#movie-country');
+        movieCountryElement.textContent = 'Pays d\'origine : ' + value.countries;
 
-    // movie__summary
-    let movie__summaryElement = modalContentElement.getElementsByClassName('movie__summary')[0];
-    movie__summaryElement.textContent = 'Résumé du film : ' + movieData.long_description;
+        // movie-box-office-score
+        let movieBoxOfficeScoreElement = modalContentElement.querySelector('#movie-box-office-score');
+        movieBoxOfficeScoreElement.textContent = 'Résultat au Box Office : ' + value.worldwide_gross_income + ' $';
+
+        // movie-summary
+        let movieSummaryElement = modalContentElement.querySelector('#movie-summary');
+        movieSummaryElement.textContent = 'Résumé du film : ' + value.long_description;
+    });
+
 }
 
 // Get the modal
