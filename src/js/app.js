@@ -57,26 +57,35 @@ const moviesAction = getAllMoviesFilteredDetailsPromise('imdb_score_min=8.8&genr
 const moviesMusical = getAllMoviesFilteredDetailsPromise('imdb_score_min=8.8&genre=Musical');
 const moviesTrhiller = getAllMoviesFilteredDetailsPromise('imdb_score_min=8.8&genre=Thriller');
 const bestRatedMovies = getAllMoviesFilteredDetailsPromise('imdb_score_min=9');
+const bestMoviePromise = bestRatedMovies.then((value) => {
+    return value[0];
+}).then((value) => {
+    return value[0];
+});
 
 
 window.onload = function () {
 
+    // Update best_movie_section
+    update_section_hero('best_movie_section', bestMoviePromise);
+
     // Update top_rated_movies_section section
-    update_section('top_rated_movies_section', bestRatedMovies, start = 1)
+    update_section_carousel('top_rated_movies_section', bestRatedMovies, start = 1);
 
     // Update category_1_section section
-    update_section('category_1_section', moviesAction)
+    update_section_carousel('category_1_section', moviesAction);
 
     // Update category_2_section section
-    update_section('category_2_section', moviesMusical)
+    update_section_carousel('category_2_section', moviesMusical);
 
     // Update category_3_section section
-    update_section('category_3_section', moviesTrhiller)
+    update_section_carousel('category_3_section', moviesTrhiller);
 
 
 }
 
-function update_section(sectionId, moviesPromises, start = 0) {
+
+function update_section_carousel(sectionId, moviesPromises, start = 0) {
     // Section Selection
     let section = document.querySelector(`#${sectionId}`);
 
@@ -102,6 +111,31 @@ function update_section(sectionId, moviesPromises, start = 0) {
     }
 
 
+}
+
+function update_section_hero(sectionId, moviePromiseResponse) {
+    // Section Selection
+    let section = document.querySelector(`#${sectionId}`);
+
+    // Update Hero Info
+    update_hero_info(section, moviePromiseResponse);
+
+    // Update Modal
+    update_movie_data(section, moviePromiseResponse);
+
+}
+
+function update_hero_info(modalContentElement, moviePromiseResponse) {
+
+    moviePromiseResponse.then((value) => {
+        // hero title
+        let heroTitle = modalContentElement.querySelector("#hero-title");
+        heroTitle.textContent = value.title;
+
+        // hero description
+        let heroDescription = modalContentElement.querySelector("#hero-description");
+        heroDescription.textContent = value.description;
+    });
 }
 
 function update_movie_data(modalContentElement, moviePromiseResponse) {
