@@ -66,20 +66,20 @@ const bestMoviePromise = bestRatedMovies.then((value) => {
 
 window.onload = function () {
 
-    // Update best_movie_section
-    update_section_hero('best_movie_section', bestMoviePromise);
+    // Update best_movie section
+    update_section_hero('best_movie', bestMoviePromise);
 
-    // Update top_rated_movies_section section
-    update_section_carousel('top_rated_movies_section', bestRatedMovies, start = 1);
+    // Update top_rated section
+    update_section_carousel('top_rated', bestRatedMovies, start = 1);
 
-    // Update category_1_section section
-    update_section_carousel('category_1_section', moviesAction);
+    // Update category_1 section
+    update_section_carousel('category_1', moviesAction);
 
-    // Update category_2_section section
-    update_section_carousel('category_2_section', moviesMusical);
+    // Update category_2 section
+    update_section_carousel('category_2', moviesMusical);
 
-    // Update category_3_section section
-    update_section_carousel('category_3_section', moviesTrhiller);
+    // Update category_3 section
+    update_section_carousel('category_3', moviesTrhiller);
 
 
 }
@@ -197,24 +197,23 @@ var modal_elements = document.querySelectorAll(".modal");
 
 // Generate HTML modal template
 function generate_modal_HTML(id) {
-    let movie = ["best_movie", "top_rated_movie_1", "top_rated_movie_2", "top_rated_movie_3", "top_rated_movie_4", "top_rated_movie_5", "top_rated_movie_6", "top_rated_movie_7", "category_1_movie_1", "category_1_movie_2", "category_1_movie_3", "category_1_movie_4", "category_1_movie_5", "category_1_movie_6", "category_1_movie_7", "category_2_movie_1", "category_2_movie_2", "category_2_movie_3", "category_2_movie_4", "category_2_movie_5", "category_2_movie_6", "category_2_movie_7", "category_3_movie_1", "category_3_movie_2", "category_3_movie_3", "category_3_movie_4", "category_3_movie_5", "category_3_movie_6", "category_3_movie_7"];
     let modal_HTML_output = `<!-- Modal content -->
     <div class="modal-content">
         <div>
-            <img id="modal-movie-thumbnail" class="modal__movie__thumbnail" src="assets/${movie[id]}_placeholder.png"/>
-            <p id="movie-title" class="movie__title">Titre : ${movie[id]}_TITLE_placeholder</p>
-            <p id="movie_genres" class="movie__genres">Genre Complet : ${movie[id]}_GENRES_placeholder</p>
-            <p id= "movie-year" class="movie__year">Date de sortie : ${movie[id]}_YEAR_placeholder</p>
-            <p id="movie-rated" class="movie__rated">Rated : ${movie[id]}_RATED_placeholder</p>
-            <p id="movie-imdb-score" class="movie__imdb_score">Score Imdb : ${movie[id]}_IMDB_SCORE_placeholder</p>
+            <img id="modal-movie-thumbnail" class="modal__movie__thumbnail" src="assets/${id}_placeholder.png"/>
+            <p id="movie-title" class="movie__title">Titre : ${id}_TITLE_placeholder</p>
+            <p id="movie_genres" class="movie__genres">Genre Complet : ${id}_GENRES_placeholder</p>
+            <p id= "movie-year" class="movie__year">Date de sortie : ${id}_YEAR_placeholder</p>
+            <p id="movie-rated" class="movie__rated">Rated : ${id}_RATED_placeholder</p>
+            <p id="movie-imdb-score" class="movie__imdb_score">Score Imdb : ${id}_IMDB_SCORE_placeholder</p>
         </div>
         <div>
-            <p id="movie-directors" class="movie__directors">Réalisateur : ${movie[id]}_DIRECTORS_placeholder</p>
-            <p id="movie-actors" class="movie__actors">Liste des acteurs : ${movie[id]}_ACTORS_placeholder</p>
-            <p id="movie-duration" class="movie__duration">Durée : ${movie[id]}_DURATION_placeholder</p>
-            <p id="movie-country" class="movie__country">Pays d\'origine : ${movie[id]}_COUNTRY_placeholder</p>
-            <p id="movie-box-office-score" class="movie__box_office_score">Résultat au Box Office : ${movie[id]}_BOX_OFFICE_SCORE_placeholder</p>
-            <p id="movie-summary" class="movie__summary">Résumé du film : ${movie[id]}_SUMMARY_placeholder</p>
+            <p id="movie-directors" class="movie__directors">Réalisateur : ${id}_DIRECTORS_placeholder</p>
+            <p id="movie-actors" class="movie__actors">Liste des acteurs : ${id}_ACTORS_placeholder</p>
+            <p id="movie-duration" class="movie__duration">Durée : ${id}_DURATION_placeholder</p>
+            <p id="movie-country" class="movie__country">Pays d\'origine : ${id}_COUNTRY_placeholder</p>
+            <p id="movie-box-office-score" class="movie__box_office_score">Résultat au Box Office : ${id}_BOX_OFFICE_SCORE_placeholder</p>
+            <p id="movie-summary" class="movie__summary">Résumé du film : ${id}_SUMMARY_placeholder</p>
         </div>
         <span class="close">&times;</span>
     </div>`
@@ -222,8 +221,12 @@ function generate_modal_HTML(id) {
 }
 
 // Inserting all modals in HTML
-for (let i = 0; i < modal_elements.length; i++) {
-    modal_elements[i].innerHTML = generate_modal_HTML(i);
+var sections = document.querySelectorAll("section");
+for (let section of sections) {
+    let modals = section.querySelectorAll(".modal");
+    for (let modal of modals) {
+        modal.innerHTML = generate_modal_HTML(section.id);
+    }
 }
 
 
