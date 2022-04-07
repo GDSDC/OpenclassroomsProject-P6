@@ -1,6 +1,6 @@
-async function getMovieFilteredPromise(filter_input) {
+async function getMovieFilteredPromise(filterInput) {
 
-    let resultJson = await fetch("http://localhost:8000/api/v1/titles/?" + filter_input)
+    let resultJson = await fetch("http://localhost:8000/api/v1/titles/?" + filterInput)
         .then(response => {
             return response.json();
         })
@@ -11,10 +11,10 @@ async function getMovieFilteredPromise(filter_input) {
     return resultJson;
 }
 
-async function getAllMoviesFilteredDetailsPromise(filter_input) {
+async function getAllMoviesFilteredDetailsPromise(filterInput) {
     // Initialization
-    let firstHalf = getMovieFilteredPromise(filter_input);
-    let secondHalf = getMovieFilteredPromise(filter_input + '&page=2')
+    let firstHalf = getMovieFilteredPromise(filterInput);
+    let secondHalf = getMovieFilteredPromise(filterInput + '&page=2')
 
     // First Half of data
     let firstHalfResult = firstHalf.then((value => {
@@ -55,7 +55,7 @@ function getMovieDetails(moviePromiseResponse) {
 
 const moviesAction = getAllMoviesFilteredDetailsPromise('imdb_score_min=8.8&genre=Action');
 const moviesMusical = getAllMoviesFilteredDetailsPromise('imdb_score_min=8.8&genre=Musical');
-const moviesTrhiller = getAllMoviesFilteredDetailsPromise('imdb_score_min=8.8&genre=Thriller');
+const moviesThriller = getAllMoviesFilteredDetailsPromise('imdb_score_min=8.8&genre=Thriller');
 const bestRatedMovies = getAllMoviesFilteredDetailsPromise('imdb_score_min=9');
 const bestMoviePromise = bestRatedMovies.then((value) => {
     return value[0];
@@ -66,26 +66,26 @@ const bestMoviePromise = bestRatedMovies.then((value) => {
 
 window.onload = function () {
 
-    // Update best_movie section
-    update_section_hero('best_movie', bestMoviePromise);
-
-    // Update top_rated section
-    update_section_carousel('top_rated', bestRatedMovies, start = 1);
-
-    // Update category_1 section
-    update_section_carousel('category_1', moviesAction);
-
-    // Update category_2 section
-    update_section_carousel('category_2', moviesMusical);
-
-    // Update category_3 section
-    update_section_carousel('category_3', moviesTrhiller);
+    // // Update best-movie section
+    // updateSectionHero('best-movie', bestMoviePromise);
+    //
+    // // Update top-rated section
+    // updateSectioncarousel('top-rated', bestRatedMovies, start = 1);
+    //
+    // // Update category-1 section
+    // updateSectioncarousel('category-1', moviesAction);
+    //
+    // // Update category-2 section
+    // updateSectioncarousel('category-2', moviesMusical);
+    //
+    // // Update category-3 section
+    // updateSectioncarousel('category-3', moviesThriller);
 
 
 }
 
 
-function update_section_carousel(sectionId, moviesPromises, start = 0) {
+function updateSectioncarousel(sectionId, moviesPromises, start = 0) {
     // Section Selection
     let section = document.querySelector(`#${sectionId}`);
 
@@ -98,7 +98,7 @@ function update_section_carousel(sectionId, moviesPromises, start = 0) {
         }).then((value) => {
             return value[i];
         });
-        update_movie_data(carouselElements[i - start], moviePromiseResponse);
+        updateMovieData(carouselElements[i - start], moviePromiseResponse);
     }
 
     for (let i = 0; i < 2 + start; i++) {
@@ -107,25 +107,25 @@ function update_section_carousel(sectionId, moviesPromises, start = 0) {
         }).then((value) => {
             return value[i];
         });
-        update_movie_data(carouselElements[i + 5 - start], moviePromiseResponse);
+        updateMovieData(carouselElements[i + 5 - start], moviePromiseResponse);
     }
 
 
 }
 
-function update_section_hero(sectionId, moviePromiseResponse) {
+function updateSectionHero(sectionId, moviePromiseResponse) {
     // Section Selection
     let section = document.querySelector(`#${sectionId}`);
 
     // Update Hero Info
-    update_hero_info(section, moviePromiseResponse);
+    updateHeroInfo(section, moviePromiseResponse);
 
     // Update Modal
-    update_movie_data(section, moviePromiseResponse);
+    updateMovieData(section, moviePromiseResponse);
 
 }
 
-function update_hero_info(modalContentElement, moviePromiseResponse) {
+function updateHeroInfo(modalContentElement, moviePromiseResponse) {
 
     moviePromiseResponse.then((value) => {
         // hero title
@@ -138,7 +138,7 @@ function update_hero_info(modalContentElement, moviePromiseResponse) {
     });
 }
 
-function update_movie_data(modalContentElement, moviePromiseResponse) {
+function updateMovieData(modalContentElement, moviePromiseResponse) {
 
     moviePromiseResponse.then((value) => {
         // movie thumbnail
@@ -150,7 +150,7 @@ function update_movie_data(modalContentElement, moviePromiseResponse) {
         movieTitleElement.textContent = 'Titre : ' + value.title;
 
         // movie-genres
-        let movieGenresElement = modalContentElement.querySelector('#movie_genres');
+        let movieGenresElement = modalContentElement.querySelector('#movie-genres');
         movieGenresElement.textContent = 'Genre Complet : ' + value.genres;
 
         // movie-year
@@ -193,16 +193,16 @@ function update_movie_data(modalContentElement, moviePromiseResponse) {
 }
 
 // Get the modal
-var modal_elements = document.querySelectorAll(".modal");
+var modalElements = document.querySelectorAll(".modal");
 
 // Generate HTML modal template
-function generate_modal_HTML(id) {
-    let modal_HTML_output = `<!-- Modal content -->
+function generateModalHTML(id) {
+    let modalHTMLOutput = `<!-- Modal content -->
     <div class="modal-content">
         <div>
-            <img id="modal-movie-thumbnail" class="modal__movie__thumbnail" src="assets/${id}_placeholder.png"/>
+            <img id="modal-movie-thumbnail" class="modal__movie__thumbnail" src="assets/${id}-placeholder.png"/>
             <p id="movie-title" class="movie__title">Titre : ${id}_TITLE_placeholder</p>
-            <p id="movie_genres" class="movie__genres">Genre Complet : ${id}_GENRES_placeholder</p>
+            <p id="movie-genres" class="movie__genres">Genre Complet : ${id}_GENRES_placeholder</p>
             <p id= "movie-year" class="movie__year">Date de sortie : ${id}_YEAR_placeholder</p>
             <p id="movie-rated" class="movie__rated">Rated : ${id}_RATED_placeholder</p>
             <p id="movie-imdb-score" class="movie__imdb_score">Score Imdb : ${id}_IMDB_SCORE_placeholder</p>
@@ -217,7 +217,7 @@ function generate_modal_HTML(id) {
         </div>
         <span class="close">&times;</span>
     </div>`
-    return modal_HTML_output
+    return modalHTMLOutput
 }
 
 // Inserting all modals in HTML
@@ -225,42 +225,42 @@ var sections = document.querySelectorAll("section");
 for (let section of sections) {
     let modals = section.querySelectorAll(".modal");
     for (let modal of modals) {
-        modal.innerHTML = generate_modal_HTML(section.id);
+        modal.innerHTML = generateModalHTML(section.id);
     }
 }
 
 
 // Get the button that opens the modal
-var modal__trigger_elements = document.querySelectorAll(".modal__trigger");
+var modalTriggerElements = document.querySelectorAll(".modal__trigger");
 
 // Get the <span> element that closes the modal
-var span_elements = document.querySelectorAll(".close");
+var spanElements = document.querySelectorAll(".close");
 
 // When the user clicks on the modal__triggers, open the modal
-for (let i = 0; i < modal__trigger_elements.length; i++) {
-    modal__trigger_elements[i].onclick = function () {
-        modal_elements[i].style.display = "block";
+for (let i = 0; i < modalTriggerElements.length; i++) {
+    modalTriggerElements[i].onclick = function () {
+        modalElements[i].style.display = "block";
     }
 }
 // When the user clicks on <span> (x), close the modal
-for (let i = 0; i < span_elements.length; i++) {
-    span_elements[i].onclick = function () {
-        modal_elements[i].style.display = "none";
+for (let i = 0; i < spanElements.length; i++) {
+    spanElements[i].onclick = function () {
+        modalElements[i].style.display = "none";
     }
 }
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function (event) {
-    for (let i = 0; i < modal_elements.length; i++) {
-        if (event.target == modal_elements[i]) {
-            modal_elements[i].style.display = "none";
+    for (let i = 0; i < modalElements.length; i++) {
+        if (event.target == modalElements[i]) {
+            modalElements[i].style.display = "none";
         }
     }
 }
 // When the user press EscapeKey, close it
 window.addEventListener('keydown', function (event) {
-    for (let i = 0; i < modal_elements.length; i++) {
+    for (let i = 0; i < modalElements.length; i++) {
         if (event.key === 'Escape') {
-            modal_elements[i].style.display = 'none'
+            modalElements[i].style.display = 'none'
         }
     }
 })
