@@ -28,7 +28,7 @@ li {
 .hero {
     /* Borders for debugging */
     border: 2px solid lightseagreen;
-    height: 300px;
+    height: 600px;
 }
 
 /* The hero image */
@@ -41,13 +41,32 @@ li {
 
 }
 
-/* Place text in the middle of the image */
-.hero__text {
+/* The hero info */
+.hero__info {
+    /* Borders for debugging */
+    border: 2px solid lightseagreen;
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+    height: 200px;
+    min-width: 500px;
     position: relative;
     top: -50%;
-    left: 5%;
     color: white;
+
+}
+
+/* Place text in the middle of the image */
+.hero__title {
     font-weight: bold;
+    height: 20%;
+}
+
+.hero__description {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40%;
 }
 
 .hero__play_button {
@@ -59,9 +78,7 @@ li {
     text-align: center;
     font-size: 16px;
     border-radius: 4px;
-    position: relative;
-    top: -45%;
-    left: 5%;
+    width: 100px;
 }
 
 
