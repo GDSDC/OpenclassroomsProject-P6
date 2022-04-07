@@ -66,20 +66,20 @@ const bestMoviePromise = bestRatedMovies.then((value) => {
 
 window.onload = function () {
 
-    // // Update best-movie section
-    // updateSectionHero('best-movie', bestMoviePromise);
-    //
-    // // Update top-rated section
-    // updateSectioncarousel('top-rated', bestRatedMovies, start = 1);
-    //
-    // // Update category-1 section
-    // updateSectioncarousel('category-1', moviesAction);
-    //
-    // // Update category-2 section
-    // updateSectioncarousel('category-2', moviesMusical);
-    //
-    // // Update category-3 section
-    // updateSectioncarousel('category-3', moviesThriller);
+    // Update best-movie section
+    updateSectionHero('best-movie', bestMoviePromise);
+
+    // Update top-rated section
+    updateSectioncarousel('top-rated', bestRatedMovies, start = 1);
+
+    // Update category-1 section
+    updateSectioncarousel('category-1', moviesAction);
+
+    // Update category-2 section
+    updateSectioncarousel('category-2', moviesMusical);
+
+    // Update category-3 section
+    updateSectioncarousel('category-3', moviesThriller);
 
 
 }
