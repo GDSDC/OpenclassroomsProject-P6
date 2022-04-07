@@ -29,6 +29,7 @@ li {
     /* Borders for debugging */
     border: 2px solid lightseagreen;
     height: 600px;
+
 }
 
 /* The hero image */
@@ -36,7 +37,9 @@ li {
 
     /* Set a specific height */
     height: inherit;
-    width: 100%;
+    width: 75%;
+    float: right;
+    background: linear-gradient(to right, blue, pink);
 
 
 }
