@@ -33,26 +33,19 @@ li {
 
 /* The hero image */
 .hero__imgage {
-    /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
-    background-image: url(../assets/best_movie_placeholder.png);
 
     /* Set a specific height */
     height: inherit;
+    width: 100%;
 
-    /* Position and center the image to scale nicely on all screens */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
+
 }
 
 /* Place text in the middle of the image */
 .hero__text {
-    text-align: left;
-    position: absolute;
-    top: 50%;
-    left: 10%;
-    transform: translate(-50%, -50%);
+    position: relative;
+    top: -50%;
+    left: 5%;
     color: white;
     font-weight: bold;
 }
@@ -64,11 +57,11 @@ li {
     font-weight: bold;
     padding: 20px;
     text-align: center;
-    /*text-decoration: none;*/
-    /*display: inline-block;*/
     font-size: 16px;
-    /*margin: 4px 2px;*/
     border-radius: 4px;
+    position: relative;
+    top: -45%;
+    left: 5%;
 }
 
 
@@ -119,7 +112,8 @@ li {
     width: 80%; /* Could be more or less, depending on screen size */
     color: white;
 }
-.modal__movie__thumbnail{
+
+.modal__movie__thumbnail {
     max-height: 300px;
     max-width: 300px;
 }
