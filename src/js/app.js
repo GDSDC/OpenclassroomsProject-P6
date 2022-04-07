@@ -1,4 +1,3 @@
-
 async function getMovieFilteredPromise(filter_input) {
 
     let resultJson = await fetch("http://localhost:8000/api/v1/titles/?" + filter_input)
@@ -63,7 +62,7 @@ const bestRatedMovies = getAllMoviesFilteredDetailsPromise('imdb_score_min=9');
 window.onload = function () {
 
     // Update top_rated_movies_section section
-    update_section('top_rated_movies_section', bestRatedMovies)
+    update_section('top_rated_movies_section', bestRatedMovies, start = 1)
 
     // Update category_1_section section
     update_section('category_1_section', moviesAction)
@@ -77,29 +76,29 @@ window.onload = function () {
 
 }
 
-function update_section(sectionId, moviesPromises) {
+function update_section(sectionId, moviesPromises, start = 0) {
     // Section Selection
     let section = document.querySelector(`#${sectionId}`);
 
     // Update thumbnails and modals
     let carouselElements = section.querySelectorAll('.carousel__movie');
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = start; i < 5; i++) {
         let moviePromiseResponse = moviesPromises.then((value) => {
             return value[0];
         }).then((value) => {
             return value[i];
         });
-        update_movie_data(carouselElements[i], moviePromiseResponse);
+        update_movie_data(carouselElements[i - start], moviePromiseResponse);
     }
 
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 2 + start; i++) {
         let moviePromiseResponse = moviesPromises.then((value) => {
             return value[1];
         }).then((value) => {
             return value[i];
         });
-        update_movie_data(carouselElements[i + 5], moviePromiseResponse);
+        update_movie_data(carouselElements[i + 5 - start], moviePromiseResponse);
     }
 
 
