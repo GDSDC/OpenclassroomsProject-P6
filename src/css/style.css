@@ -106,10 +106,9 @@ li {
 .carousel__movie {
     margin: 0.4vw;
     border: 2px solid lightseagreen;
-    /*width: 14%;*/
-    /*height: 100px;*/
-    width: 364px;
-    height: 400px;
+    flex: 0 0 13%;
+    /*height calculated to fit img dimension*/
+    height: calc(13vw * 1.47);
 }
 
 .carousel__movie__thumbnail {
