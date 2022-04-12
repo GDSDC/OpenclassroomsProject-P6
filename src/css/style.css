@@ -34,14 +34,28 @@ li {
 
 /* The hero image */
 .hero__imgage {
+    height: inherit;
+    width: 100%;
+}
 
-    /* Set a specific height */
+.img-gradient {
+    position: relative;
     height: inherit;
     width: 75%;
     float: right;
-    background: linear-gradient(to right, blue, pink);
 
 
+}
+
+
+.img-gradient::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, #141414, transparent);
 }
 
 /* The hero info */
