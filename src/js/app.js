@@ -4,23 +4,7 @@ const MOVIES_CATEGORIES_PARAMS = [
     {sort_by: '-imdb_score', page_size: CAROUSEL_SIZE + 1},
     {genre: 'Action', sort_by: '-imdb_score', page_size: CAROUSEL_SIZE},
     {genre: 'Musical', sort_by: '-imdb_score', page_size: CAROUSEL_SIZE},
-    {genre: 'Thriller', sort_by: '-imdb_score', page_size: CAROUSEL_SIZE},
-]
-
-async function getMovieFiltered(filterInput) {
-
-    let resultJsonFetch = fetch(API_URL + "/titles/?" + filterInput)
-        .then(response => {
-            return response.json();
-        })
-        .then((value) => {
-            return value.results;
-        });
-
-    let resultJson = await resultJsonFetch;
-
-    return resultJson;
-}
+    {genre: 'Thriller', sort_by: '-imdb_score', page_size: CAROUSEL_SIZE}]
 
 async function getMovies(searchParams) {
     const searchQuery = new URLSearchParams(searchParams).toString();
@@ -44,184 +28,119 @@ async function getMoviesCategoriesData(moviesCategoryParams) {
 }
 
 
-const moviesCategoriesData = getMoviesCategoriesData(MOVIES_CATEGORIES_PARAMS);
+window.onload = async function () {
+    // Getting data
+    const moviesCategoriesData = await getMoviesCategoriesData(MOVIES_CATEGORIES_PARAMS);
 
-
-async function getAllMoviesFilteredDetails(filterInput) {
-    // Initialization
-    let firstHalf = getMovieFiltered(filterInput);
-    let secondHalf = getMovieFiltered(filterInput + '&page=2')
-
-    // First Half of data
-    let firstHalfResult = firstHalf.then((value => {
-        let result = [];
-        for (let movie of value) {
-            result.push(getMovieDetails(movie.id));
-        }
-        return result;
-    }));
-
-    // Second Half of data
-    let secondHalfResult = secondHalf.then((value => {
-        let result = [];
-        for (let movie of value) {
-            result.push(getMovieDetails(movie.id));
-        }
-        return result;
-    }));
-
-
-    return [firstHalfResult, secondHalfResult];
-}
-
-
-async function getMovieDetails(movieId) {
-    let resultJsonFetch = fetch(API_URL + "/titles/" + movieId)
-        .then(response => {
-            return response.json();
-        });
-
-    let resultJson = await resultJsonFetch;
-
-    return resultJson;
-}
-
-const moviesAction = getAllMoviesFilteredDetails('imdb_score_min=8.8&genre=Action');
-const moviesMusical = getAllMoviesFilteredDetails('imdb_score_min=8.8&genre=Musical');
-const moviesThriller = getAllMoviesFilteredDetails('imdb_score_min=8.8&genre=Thriller');
-const bestRatedMovies = getAllMoviesFilteredDetails('imdb_score_min=9');
-const bestMoviePromise = bestRatedMovies.then((value) => {
-    return value[0];
-}).then((value) => {
-    return value[0];
-});
-
-
-window.onload = function () {
 
     // Update best-movie section
-    updateSectionHero('best-movie', bestMoviePromise);
+    updateSectionHero('best-movie', moviesCategoriesData[0][0]);
 
     // Update top-rated section
-    updateSectioncarousel('top-rated', bestRatedMovies, start = 1);
+    updateSectioncarousel('top-rated', moviesCategoriesData[0], start = 1);
 
     // Update category-1 section
-    updateSectioncarousel('category-1', moviesAction);
+    updateSectioncarousel('category-1', moviesCategoriesData[1]);
 
     // Update category-2 section
-    updateSectioncarousel('category-2', moviesMusical);
+    updateSectioncarousel('category-2', moviesCategoriesData[2]);
 
     // Update category-3 section
-    updateSectioncarousel('category-3', moviesThriller);
+    updateSectioncarousel('category-3', moviesCategoriesData[3]);
 
 
 }
 
 
-function updateSectioncarousel(sectionId, moviesPromises, start = 0) {
+async function updateSectioncarousel(sectionId, categoryDetailedData, start = 0) {
+
     // Section Selection
     let section = document.querySelector(`#${sectionId}`);
 
     // Update thumbnails and modals
     let carouselElements = section.querySelectorAll('.carousel__movie');
 
-    for (let i = start; i < 5; i++) {
-        let moviePromiseResponse = moviesPromises.then((value) => {
-            return value[0];
-        }).then((value) => {
-            return value[i];
-        });
-        updateMovieData(carouselElements[i - start], moviePromiseResponse);
-    }
-
-    for (let i = 0; i < 2 + start; i++) {
-        let moviePromiseResponse = moviesPromises.then((value) => {
-            return value[1];
-        }).then((value) => {
-            return value[i];
-        });
-        updateMovieData(carouselElements[i + 5 - start], moviePromiseResponse);
+    for (let i = start; i < CAROUSEL_SIZE + start; i++) {
+        updateMovieData(carouselElements[i - start], categoryDetailedData[i]);
     }
 
 
 }
 
-function updateSectionHero(sectionId, moviePromiseResponse) {
+function updateSectionHero(sectionId, movieDetailedData) {
     // Section Selection
     let section = document.querySelector(`#${sectionId}`);
 
     // Update Hero Info
-    updateHeroInfo(section, moviePromiseResponse);
+    updateHeroInfo(section, movieDetailedData);
 
     // Update Modal
-    updateMovieData(section, moviePromiseResponse);
+    updateMovieData(section, movieDetailedData);
 
 }
 
-function updateHeroInfo(modalContentElement, moviePromiseResponse) {
+function updateHeroInfo(modalContentElement, movieDetailedData) {
 
-    moviePromiseResponse.then((value) => {
-        // hero title
-        let heroTitle = modalContentElement.querySelector("#hero-title");
-        heroTitle.textContent = value.title;
+    // hero title
+    let heroTitle = modalContentElement.querySelector("#hero-title");
+    heroTitle.textContent = movieDetailedData.title;
 
-        // hero description
-        let heroDescription = modalContentElement.querySelector("#hero-description");
-        heroDescription.textContent = value.description;
-    });
+    // hero description
+    let heroDescription = modalContentElement.querySelector("#hero-description");
+    heroDescription.textContent = movieDetailedData.description;
+
 }
 
-function updateMovieData(modalContentElement, moviePromiseResponse) {
+function updateMovieData(modalContentElement, movieDetailedData) {
 
-    moviePromiseResponse.then((value) => {
-        // movie thumbnail
-        let modalMovieThumbnailElement = modalContentElement.querySelectorAll("img");
-        modalMovieThumbnailElement.forEach(element => element.src = value.image_url);
+    // movie thumbnail
+    let modalMovieThumbnailElement = modalContentElement.querySelectorAll("img");
+    modalMovieThumbnailElement.forEach(element => element.src = movieDetailedData.image_url);
 
-        // movie-title
-        let movieTitleElement = modalContentElement.querySelector('#movie-title');
-        movieTitleElement.textContent = 'Titre : ' + value.title;
+    // movie-title
+    let movieTitleElement = modalContentElement.querySelector('#movie-title');
+    movieTitleElement.textContent = 'Titre : ' + movieDetailedData.title;
 
-        // movie-genres
-        let movieGenresElement = modalContentElement.querySelector('#movie-genres');
-        movieGenresElement.textContent = 'Genre Complet : ' + value.genres;
+    // movie-genres
+    let movieGenresElement = modalContentElement.querySelector('#movie-genres');
+    movieGenresElement.textContent = 'Genre Complet : ' + movieDetailedData.genres;
 
-        // movie-year
-        let movieYearElement = modalContentElement.querySelector('#movie-year');
-        movieYearElement.textContent = 'Date de sortie : ' + value.year;
+    // movie-year
+    let movieYearElement = modalContentElement.querySelector('#movie-year');
+    movieYearElement.textContent = 'Date de sortie : ' + movieDetailedData.year;
 
-        // movie-rated
-        let movieRatedElement = modalContentElement.querySelector('#movie-rated');
-        movieRatedElement.textContent = 'Rated : ' + value.rated;
+    // movie-rated
+    let movieRatedElement = modalContentElement.querySelector('#movie-rated');
+    movieRatedElement.textContent = 'Rated : ' + movieDetailedData.rated;
 
-        // movie-imdb-score
-        let movieImdbScoreElement = modalContentElement.querySelector('#movie-imdb-score');
-        movieImdbScoreElement.textContent = 'Score Imdb : ' + value.imdb_score;
+    // movie-imdb-score
+    let movieImdbScoreElement = modalContentElement.querySelector('#movie-imdb-score');
+    movieImdbScoreElement.textContent = 'Score Imdb : ' + movieDetailedData.imdb_score;
 
-        // movie-directors
-        let movieDirectorsElement = modalContentElement.querySelector('#movie-directors');
-        movieDirectorsElement.textContent = 'Réalisateur : ' + value.directors;
+    // movie-directors
+    let movieDirectorsElement = modalContentElement.querySelector('#movie-directors');
+    movieDirectorsElement.textContent = 'Réalisateur : ' + movieDetailedData.directors;
 
-        // movie-actors
-        let movieActorsElement = modalContentElement.querySelector('#movie-actors');
-        movieActorsElement.textContent = 'Liste des acteurs : ' + value.actors;
+    // movie-actors
+    let movieActorsElement = modalContentElement.querySelector('#movie-actors');
+    movieActorsElement.textContent = 'Liste des acteurs : ' + movieDetailedData.actors;
 
-        // movie-duration
-        let movieDurationElement = modalContentElement.querySelector('#movie-duration');
-        movieDurationElement.textContent = 'Durée :  ' + value.duration + ' minutes';
+    // movie-duration
+    let movieDurationElement = modalContentElement.querySelector('#movie-duration');
+    movieDurationElement.textContent = 'Durée :  ' + movieDetailedData.duration + ' minutes';
 
-        // movie-country
-        let movieCountryElement = modalContentElement.querySelector('#movie-country');
-        movieCountryElement.textContent = 'Pays d\'origine : ' + value.countries;
+    // movie-country
+    let movieCountryElement = modalContentElement.querySelector('#movie-country');
+    movieCountryElement.textContent = 'Pays d\'origine : ' + movieDetailedData.countries;
 
-        // movie-box-office-score
-        let movieBoxOfficeScoreElement = modalContentElement.querySelector('#movie-box-office-score');
-        movieBoxOfficeScoreElement.textContent = 'Résultat au Box Office : ' + value.worldwide_gross_income + ' $';
+    // movie-box-office-score
+    let movieBoxOfficeScoreElement = modalContentElement.querySelector('#movie-box-office-score');
+    movieBoxOfficeScoreElement.textContent = 'Résultat au Box Office : ' + movieDetailedData.worldwide_gross_income + ' $';
 
-        // movie-summary
-        let movieSummaryElement = modalContentElement.querySelector('#movie-summary');
-        movieSummaryElement.textContent = 'Résumé du film : ' + value.long_description;
-    });
+    // movie-summary
+    let movieSummaryElement = modalContentElement.querySelector('#movie-summary');
+    movieSummaryElement.textContent = 'Résumé du film : ' + movieDetailedData.long_description;
+
 
 }
 
