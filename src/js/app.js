@@ -1,8 +1,8 @@
-const API_URL = "http://localhost:8000/api/v1/";
+const API_URL = "http://localhost:8000/api/v1";
 
-async function getMovieFilteredPromise(filterInput) {
+async function getMovieFiltered(filterInput) {
 
-    let resultJsonFetch = fetch(API_URL + "titles/?" + filterInput)
+    let resultJsonFetch = fetch(API_URL + "/titles/?" + filterInput)
         .then(response => {
             return response.json();
         })
@@ -15,16 +15,16 @@ async function getMovieFilteredPromise(filterInput) {
     return resultJson;
 }
 
-async function getAllMoviesFilteredDetailsPromise(filterInput) {
+async function getAllMoviesFilteredDetails(filterInput) {
     // Initialization
-    let firstHalf = getMovieFilteredPromise(filterInput);
-    let secondHalf = getMovieFilteredPromise(filterInput + '&page=2')
+    let firstHalf = getMovieFiltered(filterInput);
+    let secondHalf = getMovieFiltered(filterInput + '&page=2')
 
     // First Half of data
     let firstHalfResult = firstHalf.then((value => {
         let result = [];
         for (let movie of value) {
-            result.push(getMovieDetailsPromise(movie.id));
+            result.push(getMovieDetails(movie.id));
         }
         return result;
     }));
@@ -33,7 +33,7 @@ async function getAllMoviesFilteredDetailsPromise(filterInput) {
     let secondHalfResult = secondHalf.then((value => {
         let result = [];
         for (let movie of value) {
-            result.push(getMovieDetailsPromise(movie.id));
+            result.push(getMovieDetails(movie.id));
         }
         return result;
     }));
@@ -43,8 +43,8 @@ async function getAllMoviesFilteredDetailsPromise(filterInput) {
 }
 
 
-async function getMovieDetailsPromise(movieId) {
-    let resultJsonFetch = fetch(API_URL + "titles/" + movieId)
+async function getMovieDetails(movieId) {
+    let resultJsonFetch = fetch(API_URL + "/titles/" + movieId)
         .then(response => {
             return response.json();
         });
@@ -54,16 +54,10 @@ async function getMovieDetailsPromise(movieId) {
     return resultJson;
 }
 
-function getMovieDetails(moviePromiseResponse) {
-    moviePromiseResponse.then((value) => {
-        console.log(value.id);
-    });
-}
-
-const moviesAction = getAllMoviesFilteredDetailsPromise('imdb_score_min=8.8&genre=Action');
-const moviesMusical = getAllMoviesFilteredDetailsPromise('imdb_score_min=8.8&genre=Musical');
-const moviesThriller = getAllMoviesFilteredDetailsPromise('imdb_score_min=8.8&genre=Thriller');
-const bestRatedMovies = getAllMoviesFilteredDetailsPromise('imdb_score_min=9');
+const moviesAction = getAllMoviesFilteredDetails('imdb_score_min=8.8&genre=Action');
+const moviesMusical = getAllMoviesFilteredDetails('imdb_score_min=8.8&genre=Musical');
+const moviesThriller = getAllMoviesFilteredDetails('imdb_score_min=8.8&genre=Thriller');
+const bestRatedMovies = getAllMoviesFilteredDetails('imdb_score_min=9');
 const bestMoviePromise = bestRatedMovies.then((value) => {
     return value[0];
 }).then((value) => {
