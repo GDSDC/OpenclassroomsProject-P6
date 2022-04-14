@@ -1,6 +1,8 @@
+const API_URL = "http://localhost:8000/api/v1/";
+
 async function getMovieFilteredPromise(filterInput) {
 
-    let resultJsonFetch = fetch("http://localhost:8000/api/v1/titles/?" + filterInput)
+    let resultJsonFetch = fetch(API_URL + "titles/?" + filterInput)
         .then(response => {
             return response.json();
         })
@@ -40,8 +42,9 @@ async function getAllMoviesFilteredDetailsPromise(filterInput) {
     return [firstHalfResult, secondHalfResult];
 }
 
+
 async function getMovieDetailsPromise(movieId) {
-    let resultJsonFetch = fetch("http://localhost:8000/api/v1/titles/" + movieId)
+    let resultJsonFetch = fetch(API_URL + "titles/" + movieId)
         .then(response => {
             return response.json();
         });
