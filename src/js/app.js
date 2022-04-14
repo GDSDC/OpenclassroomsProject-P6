@@ -44,9 +44,7 @@ async function getMoviesCategoriesData(moviesCategoryParams) {
 }
 
 
-const moviesCategoriesData = Promise.all(
-    MOVIES_CATEGORIES_PARAMS.map((params) => getMovies(params)))
-    .then(value => value.map(category => category.map(movie => getMovieDetails(movie.id))));
+const moviesCategoriesData = getMoviesCategoriesData(MOVIES_CATEGORIES_PARAMS);
 
 
 async function getAllMoviesFilteredDetails(filterInput) {
