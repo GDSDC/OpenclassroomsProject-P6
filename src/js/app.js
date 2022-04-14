@@ -1,71 +1,28 @@
-async function getMovieFilteredPromise(filterInput) {
+const API_URL = "http://localhost:8000/api/v1/";
+const CAROUSEL_SIZE = 7
+const MOVIES_LIST_PARAMS = [
+    {imdb_score_min: 9, page_size: CAROUSEL_SIZE + 1},
+    {imdb_score_min: 8.8, genre: 'Action', page_size: CAROUSEL_SIZE},
+    {imdb_score_min: 8.8, genre: 'Musical', page_size: CAROUSEL_SIZE},
+    {imdb_score_min: 8.8, genre: 'Thriller', page_size: CAROUSEL_SIZE},
+]
 
-    let resultJsonFetch = fetch("http://localhost:8000/api/v1/titles/?" + filterInput)
-        .then(response => {
-            return response.json();
-        })
-        .then((value) => {
-            return value.results;
-        });
-
-    let resultJson = await resultJsonFetch;
-
-    return resultJson;
+async function getMovies(searchParams) {
+    const searchQuery = new URLSearchParams(searchParams).toString()
+    return fetch(API_URL + `/titles?${searchQuery}`)
+        .then(response => response.json())
+        .then(value => value.results);
 }
 
-async function getAllMoviesFilteredDetailsPromise(filterInput) {
-    // Initialization
-    let firstHalf = getMovieFilteredPromise(filterInput);
-    let secondHalf = getMovieFilteredPromise(filterInput + '&page=2')
-
-    // First Half of data
-    let firstHalfResult = firstHalf.then((value => {
-        let result = [];
-        for (let movie of value) {
-            result.push(getMovieDetailsPromise(movie.id));
-        }
-        return result;
-    }));
-
-    // Second Half of data
-    let secondHalfResult = secondHalf.then((value => {
-        let result = [];
-        for (let movie of value) {
-            result.push(getMovieDetailsPromise(movie.id));
-        }
-        return result;
-    }));
-
-
-    return [firstHalfResult, secondHalfResult];
+async function getMovieDetails(movieId) {
+    return fetch(API_URL + "/titles/" + movieId).then(response => response.json());
 }
 
-async function getMovieDetailsPromise(movieId) {
-    let resultJsonFetch = fetch("http://localhost:8000/api/v1/titles/" + movieId)
-        .then(response => {
-            return response.json();
-        });
+const moviesListData = await Promise.all(
+    MOVIES_LIST_PARAMS.map((params) => getMovies(params))
+).map(result => result.value)??? // TODO
 
-    let resultJson = await resultJsonFetch;
-
-    return resultJson;
-}
-
-function getMovieDetails(moviePromiseResponse) {
-    moviePromiseResponse.then((value) => {
-        console.log(value.id);
-    });
-}
-
-const moviesAction = getAllMoviesFilteredDetailsPromise('imdb_score_min=8.8&genre=Action');
-const moviesMusical = getAllMoviesFilteredDetailsPromise('imdb_score_min=8.8&genre=Musical');
-const moviesThriller = getAllMoviesFilteredDetailsPromise('imdb_score_min=8.8&genre=Thriller');
-const bestRatedMovies = getAllMoviesFilteredDetailsPromise('imdb_score_min=9');
-const bestMoviePromise = bestRatedMovies.then((value) => {
-    return value[0];
-}).then((value) => {
-    return value[0];
-});
+const bestRatedMovie = moviesListData[0].splice(0, 1) // [films]
 
 
 window.onload = function () {
@@ -74,16 +31,16 @@ window.onload = function () {
     updateSectionHero('best-movie', bestMoviePromise);
 
     // Update top-rated section
-    updateSectioncarousel('top-rated', bestRatedMovies, start = 1);
+    updateSectioncarousel('top-rated', moviesListData[0], start = 1);
 
     // Update category-1 section
-    updateSectioncarousel('category-1', moviesAction);
+    updateSectioncarousel('category-1', moviesListData[1]);
 
     // Update category-2 section
-    updateSectioncarousel('category-2', moviesMusical);
+    updateSectioncarousel('category-2', moviesListData[2]);
 
     // Update category-3 section
-    updateSectioncarousel('category-3', moviesThriller);
+    updateSectioncarousel('category-3', moviesListData[3]);
 
 
 }
@@ -143,7 +100,6 @@ function updateHeroInfo(modalContentElement, moviePromiseResponse) {
 }
 
 function updateMovieData(modalContentElement, moviePromiseResponse) {
-
     moviePromiseResponse.then((value) => {
         // movie thumbnail
         let modalMovieThumbnailElement = modalContentElement.querySelectorAll("img");
@@ -243,6 +199,16 @@ var spanElements = document.querySelectorAll(".close");
 // When the user clicks on the modal__triggers, open the modal
 for (let i = 0; i < modalTriggerElements.length; i++) {
     modalTriggerElements[i].onclick = function () {
+        // TODO
+        // let modale = getElementBy???()
+        // if (!modale) {
+        //  const movieId = ???
+        //  const movieDetails = getMovieDetails(movieId)
+        //  modale = generateModaleHTML()
+        //  modale.closeButton.onclick = closeFunction
+        //  movieNode.addChildren(modale)
+        // }
+        // display = 'block'
         modalElements[i].style.display = "block";
     }
 }
