@@ -22,16 +22,20 @@ async function getMovieFiltered(filterInput) {
     return resultJson;
 }
 
-async function getMovieDetails(movieId) {
-    return fetch(API_URL + "/titles/" + movieId).then(response => response.json());
-}
-
 async function getMovies(searchParams) {
     const searchQuery = new URLSearchParams(searchParams).toString();
     return fetch(API_URL + `/titles?${searchQuery}`)
         .then(response => response.json())
         .then(value => value.results);
 }
+
+async function getMovieDetails(movieId) {
+    return fetch(API_URL + "/titles/" + movieId).then(response => response.json());
+}
+
+const moviesCategoriesData = Promise.all(
+    MOVIES_CATEGORIES_PARAMS.map((params) => getMovies(params)));
+
 
 async function getAllMoviesFilteredDetails(filterInput) {
     // Initialization
