@@ -22,6 +22,10 @@ async function getMovieFiltered(filterInput) {
     return resultJson;
 }
 
+async function getMovieDetails(movieId) {
+    return fetch(API_URL + "/titles/" + movieId).then(response => response.json());
+}
+
 async function getMovies(searchParams) {
     const searchQuery = new URLSearchParams(searchParams).toString();
     return fetch(API_URL + `/titles?${searchQuery}`)
