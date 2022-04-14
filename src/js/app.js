@@ -20,11 +20,17 @@ async function getMovieDetails(movieId) {
 
 async function getMoviesCategoriesData(moviesCategoryParams) {
     let dataNotDetailed = Promise.all(moviesCategoryParams.map((params) => getMovies(params)));
-    let result = Promise.all(
+    let result = await Promise.all(
         Array.from(await dataNotDetailed, x => Promise.all(x.map(movie => getMovieDetails(movie.id))))
     );
+    let resultDict = {
+        "top-rated": result[0],
+        "category-1": result[1],
+        "category-2": result[2],
+        "category-3": result[3]
+    }
 
-    return result;
+    return resultDict;
 }
 
 
@@ -32,21 +38,22 @@ window.onload = async function () {
     // Getting data
     const moviesCategoriesData = await getMoviesCategoriesData(MOVIES_CATEGORIES_PARAMS);
 
+    clickModal(moviesCategoriesData);
 
-    // Update best-movie section
-    updateSectionHero('best-movie', moviesCategoriesData[0][0]);
-
-    // Update top-rated section
-    updateSectioncarousel('top-rated', moviesCategoriesData[0], start = 1);
-
-    // Update category-1 section
-    updateSectioncarousel('category-1', moviesCategoriesData[1]);
-
-    // Update category-2 section
-    updateSectioncarousel('category-2', moviesCategoriesData[2]);
-
-    // Update category-3 section
-    updateSectioncarousel('category-3', moviesCategoriesData[3]);
+    // // Update best-movie section
+    // updateSectionHero('best-movie', moviesCategoriesData["top-rated"][0]);
+    //
+    // // Update top-rated section
+    // updateSectioncarousel('top-rated', moviesCategoriesData["top-rated"], start = 1);
+    //
+    // // Update category-1 section
+    // updateSectioncarousel('category-1', moviesCategoriesData["category-1"]);
+    //
+    // // Update category-2 section
+    // updateSectioncarousel('category-2', moviesCategoriesData["category-2"]);
+    //
+    // // Update category-3 section
+    // updateSectioncarousel('category-3', moviesCategoriesData["category-1"]);
 
 
 }
@@ -172,14 +179,14 @@ function generateModalHTML(id) {
     return modalHTMLOutput
 }
 
-// Inserting all modals in HTML
-var sections = document.querySelectorAll("section");
-for (let section of sections) {
-    let modals = section.querySelectorAll(".modal");
-    for (let modal of modals) {
-        modal.innerHTML = generateModalHTML(section.id);
-    }
-}
+// // Inserting all modals in HTML
+// var sections = document.querySelectorAll("section");
+// for (let section of sections) {
+//     let modals = section.querySelectorAll(".modal");
+//     for (let modal of modals) {
+//         modal.innerHTML = generateModalHTML(section.id);
+//     }
+// }
 
 
 // Get the button that opens the modal
@@ -189,11 +196,31 @@ var modalTriggerElements = document.querySelectorAll(".modal__trigger");
 var spanElements = document.querySelectorAll(".close");
 
 // When the user clicks on the modal__triggers, open the modal
-for (let i = 0; i < modalTriggerElements.length; i++) {
-    modalTriggerElements[i].onclick = function () {
-        modalElements[i].style.display = "block";
+function clickModal(moviesDetailedData) {
+
+    var sections = document.querySelectorAll("section");
+    for (let section of sections) {
+        let carousels = Array.prototype.slice.call(section.querySelectorAll(".carousel__movie"));
+        for (let carousel of carousels) {
+            let modalTrigger = carousel.querySelector(".modal__trigger");
+            let modal = carousel.querySelector(".modal");
+            modalTrigger.onclick = function () {
+                modal.innerHTML = generateModalHTML(section.id);
+                // TODO : handle case of top rated that begin at index 1 not 0
+                updateMovieData(modal, moviesDetailedData[section.id][carousels.indexOf(carousel)]);
+                modal.style.display = "block";
+            }
+        }
     }
 }
+
+// // When the user clicks on the modal__triggers, open the modal
+// for (let i = 0; i < modalTriggerElements.length; i++) {
+//     modalTriggerElements[i].onclick = function () {
+//         modalElements[i].style.display = "block";
+//     }
+// }
+
 // When the user clicks on <span> (x), close the modal
 for (let i = 0; i < spanElements.length; i++) {
     spanElements[i].onclick = function () {
