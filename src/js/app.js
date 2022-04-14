@@ -33,8 +33,27 @@ async function getMovieDetails(movieId) {
     return fetch(API_URL + "/titles/" + movieId).then(response => response.json());
 }
 
+// async function getMoviesCategoriesData(moviesCategoryParams) {
+//     return Promise.all(moviesCategoryParams.map((params) => getMovies(params)))
+//         .then(value => value.map(category => category.map(movie => getMovieDetails(movie.id))));
+// }
+
+async function getMoviesCategoriesData(moviesCategoryParams) {
+    let dataNotDetailed = await Promise.all(moviesCategoryParams.map((params) => getMovies(params)));
+
+    let resultCat1 = await Promise.all(dataNotDetailed[0].map(movie => getMovieDetails(movie.id)));
+    let resultCat2 = await Promise.all(dataNotDetailed[1].map(movie => getMovieDetails(movie.id)));
+    let resultCat3 = await Promise.all(dataNotDetailed[2].map(movie => getMovieDetails(movie.id)));
+    let resultCat4 = await Promise.all(dataNotDetailed[3].map(movie => getMovieDetails(movie.id)));
+    let result = [resultCat1, resultCat2, resultCat3, resultCat4];
+
+    return result;
+}
+
+
 const moviesCategoriesData = Promise.all(
-    MOVIES_CATEGORIES_PARAMS.map((params) => getMovies(params)));
+    MOVIES_CATEGORIES_PARAMS.map((params) => getMovies(params)))
+    .then(value => value.map(category => category.map(movie => getMovieDetails(movie.id))));
 
 
 async function getAllMoviesFilteredDetails(filterInput) {
