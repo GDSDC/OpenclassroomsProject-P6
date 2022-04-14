@@ -1,4 +1,5 @@
 const API_URL = "http://localhost:8000/api/v1";
+const CAROUSEL_SIZE = 7;
 
 async function getMovieFiltered(filterInput) {
 
@@ -13,6 +14,13 @@ async function getMovieFiltered(filterInput) {
     let resultJson = await resultJsonFetch;
 
     return resultJson;
+}
+
+async function getMovies(searchParams) {
+    const searchQuery = new URLSearchParams(searchParams).toString();
+    return fetch(API_URL + `/titles?${searchQuery}`)
+        .then(response => response.json())
+        .then(value => value.results);
 }
 
 async function getAllMoviesFilteredDetails(filterInput) {
