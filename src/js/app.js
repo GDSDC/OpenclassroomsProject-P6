@@ -5,7 +5,7 @@ const MOVIES_CATEGORIES_PARAMS = [
     {sort_by: '-imdb_score', page_size: CAROUSEL_SIZE + 1},
     {genre: 'Action', sort_by: '-imdb_score', page_size: CAROUSEL_SIZE},
     {genre: 'Musical', sort_by: '-imdb_score', page_size: CAROUSEL_SIZE},
-    {genre: 'Thriller', sort_by: '-imdb_score', page_size: CAROUSEL_SIZE}]
+    {genre: 'Fantasy', sort_by: '-imdb_score', page_size: CAROUSEL_SIZE}]
 
 // Getting Data from API functions
 async function getMovies(searchParams) {
