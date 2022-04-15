@@ -190,7 +190,6 @@ var spanElements = document.querySelectorAll(".close");
 
 // When the user clicks on the modal__triggers, generate HTML, update data and open the modal
 function clickModal(moviesDetailedData) {
-
     let sections = document.querySelectorAll("section");
     for (let section of sections) {
         let carousels = Array.prototype.slice.call(section.querySelectorAll(".carousel__movie"));
@@ -216,7 +215,7 @@ function clickModal(moviesDetailedData) {
     modalTrigger.onclick = async function () {
         if (modal.innerHTML === "") {
             modal.innerHTML = generateModalHTML("best-movie");
-            updateMovieData(modal, await getMovieDetails(moviesDetailedData[0].id));
+            updateMovieData(modal, moviesDetailedData);
         }
         modal.style.display = "block";
     }
