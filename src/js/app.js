@@ -149,8 +149,8 @@ function updateMovieData(modalContentElement, movieDetailedData) {
 
 function generateModalHTML(id) {
     let modalHTMLOutput = `<!-- Modal content -->
-    <div class="modal-content">
-        <div>
+    <div class="modal__content">
+        <div class="modal__content__left">
             <img id="modal-movie-thumbnail" class="modal__movie__thumbnail" src="assets/${id}-placeholder.png"/>
             <p id="movie-title" class="movie__title">Titre : ${id}_TITLE_placeholder</p>
             <p id="movie-genres" class="movie__genres">Genre Complet : ${id}_GENRES_placeholder</p>
@@ -158,7 +158,7 @@ function generateModalHTML(id) {
             <p id="movie-rated" class="movie__rated">Rated : ${id}_RATED_placeholder</p>
             <p id="movie-imdb-score" class="movie__imdb_score">Score Imdb : ${id}_IMDB_SCORE_placeholder</p>
         </div>
-        <div>
+        <div class="modal__content__right">
             <p id="movie-directors" class="movie__directors">Réalisateur : ${id}_DIRECTORS_placeholder</p>
             <p id="movie-actors" class="movie__actors">Liste des acteurs : ${id}_ACTORS_placeholder</p>
             <p id="movie-duration" class="movie__duration">Durée : ${id}_DURATION_placeholder</p>

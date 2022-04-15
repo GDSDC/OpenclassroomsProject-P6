@@ -38,7 +38,7 @@ li {
     width: 100%;
 }
 
-.img-gradient {
+.img__gradient {
     position: relative;
     height: inherit;
     width: 75%;
@@ -46,7 +46,7 @@ li {
 }
 
 
-.img-gradient::after {
+.img__gradient::after {
     content: '';
     position: absolute;
     left: 0;
@@ -135,7 +135,7 @@ li {
 }
 
 /* Modal Content/Box */
-.modal-content {
+.modal__content {
     display: flex;
     flex-direction: row;
     background-color: #141414;
@@ -146,9 +146,17 @@ li {
     color: white;
 }
 
+.modal__content__left {
+    flex: 4 1 auto;
+}
+
+.modal__content__right {
+    flex: 1 1 auto;
+}
+
 .modal__movie__thumbnail {
-    max-height: 300px;
-    max-width: 300px;
+    /*max-height: 300px;*/
+    /*max-width: 300px;*/
 }
 
 /* The Close Button */
