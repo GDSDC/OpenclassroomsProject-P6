@@ -11,7 +11,7 @@ body {
 
 header {
     /* Borders for debugging */
-    border: 2px solid red;
+    /*border: 2px solid red;*/
     font-size: 15px;
 }
 
@@ -22,12 +22,12 @@ li {
 
 .category {
     /* Borders for debugging */
-    border: 2px solid red;
+    /*border: 2px solid red;*/
 }
 
 .hero {
     /* Borders for debugging */
-    border: 2px solid lightseagreen;
+    /*border: 2px solid lightseagreen;*/
     height: 600px;
 
 }
@@ -59,7 +59,7 @@ li {
 /* The hero info */
 .hero__info {
     /* Borders for debugging */
-    border: 2px solid lightseagreen;
+    /*border: 2px solid lightseagreen;*/
     display: flex;
     flex-direction: column;
     width: 35%;
@@ -105,7 +105,7 @@ li {
 
 .carousel__movie {
     margin: 0.4vw;
-    border: 2px solid lightseagreen;
+    /*border: 2px solid lightseagreen;*/
     flex: 0 0 13%;
     /*height calculated to fit img dimension*/
     height: calc(13vw * 1.47);
