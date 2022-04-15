@@ -20,13 +20,12 @@ async function getMovies(searchParams) {
 
 async function getMoviesCategoriesData(moviesCategoryParams) {
     let result = Array.from(await Promise.all(moviesCategoryParams.map((params) => getMovies(params))));
-    let resultDict = {
+    return resultDict = {
         "top-rated": result[0],
         "category-1": result[1],
         "category-2": result[2],
         "category-3": result[3]
     }
-    return resultDict;
 }
 
 async function getMovieDetails(movieId) {
@@ -63,7 +62,7 @@ window.onload = async function () {
 
 
 // Udpate DOM functions
-async function updateSectioncarousel(sectionId, categoryData) {
+function updateSectioncarousel(sectionId, categoryData) {
 
     // Section Selection
     let section = document.querySelector(`#${sectionId}`);
@@ -151,7 +150,7 @@ function updateMovieData(modalContentElement, movieDetailedData) {
 }
 
 function generateModalHTML(id) {
-    let modalHTMLOutput = `<!-- Modal content -->
+    return `<!-- Modal content -->
     <div class="modal__content">
         <div class="modal__content__left">
             <img id="modal-movie-thumbnail" class="modal__movie__thumbnail" src="assets/${id}-placeholder.png"/>
@@ -170,8 +169,7 @@ function generateModalHTML(id) {
             <p id="movie-summary" class="movie__summary">Résumé du film : ${id}_SUMMARY_placeholder</p>
         </div>
         <span class="close">&times;</span>
-    </div>`
-    return modalHTMLOutput
+    </div>`;
 }
 
 
@@ -235,6 +233,7 @@ window.onclick = function (event) {
         }
     }
 }
+
 
 window.addEventListener('keydown', function (event) {
     // When the user press EscapeKey, close it
