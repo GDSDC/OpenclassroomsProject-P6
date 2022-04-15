@@ -1,11 +1,14 @@
 // CONSTANTS
 const API_URL = "http://localhost:8000/api/v1";
+
 const CAROUSEL_SIZE = 7;
+
 const MOVIES_CATEGORIES_PARAMS = [
     {sort_by: '-imdb_score', page_size: CAROUSEL_SIZE + 1},
     {genre: 'Action', sort_by: '-imdb_score', page_size: CAROUSEL_SIZE},
     {genre: 'Musical', sort_by: '-imdb_score', page_size: CAROUSEL_SIZE},
     {genre: 'Fantasy', sort_by: '-imdb_score', page_size: CAROUSEL_SIZE}]
+
 
 // Getting Data from API functions
 async function getMovies(searchParams) {
@@ -30,6 +33,7 @@ async function getMovieDetails(movieId) {
     return fetch(API_URL + "/titles/" + movieId).then(response => response.json());
 }
 
+
 // Onload events
 window.onload = async function () {
     // Getting data
@@ -46,7 +50,6 @@ window.onload = async function () {
     // Update category-1 section
     updateSectioncarousel("category-1", moviesCategoriesData["category-1"]);
 
-
     // Update category-2 section
     updateSectioncarousel("category-2", moviesCategoriesData["category-2"]);
 
@@ -56,8 +59,8 @@ window.onload = async function () {
     // Click events
     clickModal(moviesCategoriesData);
     clickHeroButton(bestRatedMovieDetailed);
-
 }
+
 
 // Udpate DOM functions
 async function updateSectioncarousel(sectionId, categoryData) {
@@ -232,6 +235,7 @@ window.onclick = function (event) {
         }
     }
 }
+
 window.addEventListener('keydown', function (event) {
     // When the user press EscapeKey, close it
     for (let i = 0; i < modalElements.length; i++) {
