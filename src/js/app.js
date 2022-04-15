@@ -19,30 +19,26 @@ async function getMovieDetails(movieId) {
 
 
 async function getMoviesCategoriesData(moviesCategoryParams) {
-    let dataNotDetailed = Promise.all(moviesCategoryParams.map((params) => getMovies(params)));
-    let result = await Promise.all(
-        Array.from(await dataNotDetailed, x => Promise.all(x.map(movie => getMovieDetails(movie.id))))
-    );
+    let result = Array.from(await Promise.all(moviesCategoryParams.map((params) => getMovies(params))));
     let resultDict = {
         "top-rated": result[0],
         "category-1": result[1],
         "category-2": result[2],
         "category-3": result[3]
     }
-
     return resultDict;
 }
 
 
 window.onload = async function () {
     // Getting data
-    const moviesCategoriesData = await getMoviesCategoriesData(MOVIES_CATEGORIES_PARAMS);
+    const moviesCategoriesDetailedData = await getMoviesCategoriesData(MOVIES_CATEGORIES_PARAMS);
 
-    const bestRatedMovie = moviesCategoriesData["top-rated"].splice(0, 1);
+    const bestRatedMovieDetailed = moviesCategoriesDetailedData["top-rated"].splice(0, 1);
 
     // Click events
-    clickModal(moviesCategoriesData);
-    clickHeroButton(bestRatedMovie);
+    clickModal(moviesCategoriesDetailedData);
+    clickHeroButton(bestRatedMovieDetailed);
 
 
     // // Update best-movie section
@@ -200,10 +196,10 @@ function clickModal(moviesDetailedData) {
         for (let carousel of carousels) {
             let modalTrigger = carousel.querySelector(".modal__trigger");
             let modal = carousel.querySelector(".modal");
-            modalTrigger.onclick = function () {
+            modalTrigger.onclick = async function () {
                 if (modal.innerHTML === "") {
                     modal.innerHTML = generateModalHTML(section.id);
-                    updateMovieData(modal, moviesDetailedData[section.id][carousels.indexOf(carousel)]);
+                    updateMovieData(modal, await getMovieDetails(moviesDetailedData[section.id][carousels.indexOf(carousel)].id));
                 }
                 modal.style.display = "block";
             }
@@ -212,19 +208,19 @@ function clickModal(moviesDetailedData) {
 }
 
 // When the user clicks on the Hero Button, generate HTML, update data and open the modal
-function clickHeroButton(moviesDetailedData)
-{
+ function clickHeroButton(moviesDetailedData) {
     let bestMovie = document.querySelector("#best-movie");
     let modalTrigger = bestMovie.querySelector(".modal__trigger");
     let modal = bestMovie.querySelector(".modal");
-    modalTrigger.onclick = function () {
+    modalTrigger.onclick = async function () {
         if (modal.innerHTML === "") {
             modal.innerHTML = generateModalHTML("best-movie");
-            updateMovieData(modal, moviesDetailedData[0]);
+            updateMovieData(modal, await getMovieDetails(moviesDetailedData[0].id));
         }
         modal.style.display = "block";
     }
 }
+
 // When the user clicks on <span> (x), close the modal
 for (let i = 0; i < spanElements.length; i++) {
     spanElements[i].onclick = function () {
