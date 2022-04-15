@@ -38,7 +38,11 @@ window.onload = async function () {
     // Getting data
     const moviesCategoriesData = await getMoviesCategoriesData(MOVIES_CATEGORIES_PARAMS);
 
+    const bestRatedMovie = moviesCategoriesData["top-rated"].splice(0, 1);
+
+    // Click events
     clickModal(moviesCategoriesData);
+    clickHeroButton(bestRatedMovie);
 
 
     // // Update best-movie section
@@ -190,7 +194,7 @@ var spanElements = document.querySelectorAll(".close");
 // When the user clicks on the modal__triggers, generate HTML, update data and open the modal
 function clickModal(moviesDetailedData) {
 
-    var sections = document.querySelectorAll("section");
+    let sections = document.querySelectorAll("section");
     for (let section of sections) {
         let carousels = Array.prototype.slice.call(section.querySelectorAll(".carousel__movie"));
         for (let carousel of carousels) {
@@ -207,6 +211,20 @@ function clickModal(moviesDetailedData) {
     }
 }
 
+// When the user clicks on the Hero Button, generate HTML, update data and open the modal
+function clickHeroButton(moviesDetailedData)
+{
+    let bestMovie = document.querySelector("#best-movie");
+    let modalTrigger = bestMovie.querySelector(".modal__trigger");
+    let modal = bestMovie.querySelector(".modal");
+    modalTrigger.onclick = function () {
+        if (modal.innerHTML === "") {
+            modal.innerHTML = generateModalHTML("best-movie");
+            updateMovieData(modal, moviesDetailedData[0]);
+        }
+        modal.style.display = "block";
+    }
+}
 // When the user clicks on <span> (x), close the modal
 for (let i = 0; i < spanElements.length; i++) {
     spanElements[i].onclick = function () {
