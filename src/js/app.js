@@ -40,6 +40,7 @@ window.onload = async function () {
 
     clickModal(moviesCategoriesData);
 
+
     // // Update best-movie section
     // updateSectionHero('best-movie', moviesCategoriesData["top-rated"][0]);
     //
@@ -179,15 +180,6 @@ function generateModalHTML(id) {
     return modalHTMLOutput
 }
 
-// // Inserting all modals in HTML
-// var sections = document.querySelectorAll("section");
-// for (let section of sections) {
-//     let modals = section.querySelectorAll(".modal");
-//     for (let modal of modals) {
-//         modal.innerHTML = generateModalHTML(section.id);
-//     }
-// }
-
 
 // Get the button that opens the modal
 var modalTriggerElements = document.querySelectorAll(".modal__trigger");
@@ -195,7 +187,7 @@ var modalTriggerElements = document.querySelectorAll(".modal__trigger");
 // Get the <span> element that closes the modal
 var spanElements = document.querySelectorAll(".close");
 
-// When the user clicks on the modal__triggers, open the modal
+// When the user clicks on the modal__triggers, generate HTML, update data and open the modal
 function clickModal(moviesDetailedData) {
 
     var sections = document.querySelectorAll("section");
@@ -205,21 +197,15 @@ function clickModal(moviesDetailedData) {
             let modalTrigger = carousel.querySelector(".modal__trigger");
             let modal = carousel.querySelector(".modal");
             modalTrigger.onclick = function () {
-                modal.innerHTML = generateModalHTML(section.id);
-                // TODO : handle case of top rated that begin at index 1 not 0
-                updateMovieData(modal, moviesDetailedData[section.id][carousels.indexOf(carousel)]);
+                if (modal.innerHTML === "") {
+                    modal.innerHTML = generateModalHTML(section.id);
+                    updateMovieData(modal, moviesDetailedData[section.id][carousels.indexOf(carousel)]);
+                }
                 modal.style.display = "block";
             }
         }
     }
 }
-
-// // When the user clicks on the modal__triggers, open the modal
-// for (let i = 0; i < modalTriggerElements.length; i++) {
-//     modalTriggerElements[i].onclick = function () {
-//         modalElements[i].style.display = "block";
-//     }
-// }
 
 // When the user clicks on <span> (x), close the modal
 for (let i = 0; i < spanElements.length; i++) {
