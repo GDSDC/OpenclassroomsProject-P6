@@ -1,3 +1,4 @@
+// CONSTANTS
 const API_URL = "http://localhost:8000/api/v1";
 const CAROUSEL_SIZE = 7;
 const MOVIES_CATEGORIES_PARAMS = [
@@ -6,17 +7,13 @@ const MOVIES_CATEGORIES_PARAMS = [
     {genre: 'Musical', sort_by: '-imdb_score', page_size: CAROUSEL_SIZE},
     {genre: 'Thriller', sort_by: '-imdb_score', page_size: CAROUSEL_SIZE}]
 
+// Getting Data from API functions
 async function getMovies(searchParams) {
     const searchQuery = new URLSearchParams(searchParams).toString();
     return fetch(API_URL + `/titles?${searchQuery}`)
         .then(response => response.json())
         .then(value => value.results);
 }
-
-async function getMovieDetails(movieId) {
-    return fetch(API_URL + "/titles/" + movieId).then(response => response.json());
-}
-
 
 async function getMoviesCategoriesData(moviesCategoryParams) {
     let result = Array.from(await Promise.all(moviesCategoryParams.map((params) => getMovies(params))));
@@ -29,22 +26,16 @@ async function getMoviesCategoriesData(moviesCategoryParams) {
     return resultDict;
 }
 
+async function getMovieDetails(movieId) {
+    return fetch(API_URL + "/titles/" + movieId).then(response => response.json());
+}
 
+// Onload events
 window.onload = async function () {
     // Getting data
     const moviesCategoriesData = await getMoviesCategoriesData(MOVIES_CATEGORIES_PARAMS);
 
     const bestRatedMovieDetailed = await getMovieDetails(moviesCategoriesData["top-rated"].splice(0, 1)[0].id);
-
-    console.log(moviesCategoriesData["top-rated"]);
-    console.log(moviesCategoriesData["category-1"]);
-    console.log(moviesCategoriesData["category-2"]);
-    console.log(moviesCategoriesData["category-3"]);
-
-    // Click events
-    clickModal(moviesCategoriesData);
-    clickHeroButton(bestRatedMovieDetailed);
-
 
     // Update best-movie section
     updateSectionHero("best-movie", bestRatedMovieDetailed);
@@ -62,10 +53,13 @@ window.onload = async function () {
     // Update category-3 section
     updateSectioncarousel("category-3", moviesCategoriesData["category-3"]);
 
+    // Click events
+    clickModal(moviesCategoriesData);
+    clickHeroButton(bestRatedMovieDetailed);
 
 }
 
-
+// Udpate DOM functions
 async function updateSectioncarousel(sectionId, categoryData) {
 
     // Section Selection
@@ -74,7 +68,7 @@ async function updateSectioncarousel(sectionId, categoryData) {
     // Update thumbnails and modals
     let carouselThumbnails = section.querySelectorAll('.carousel__movie__thumbnail');
 
-    for (let i = 0; i < CAROUSEL_SIZE ; i++) {
+    for (let i = 0; i < CAROUSEL_SIZE; i++) {
         carouselThumbnails[i].src = categoryData[i].image_url;
     }
 
@@ -153,10 +147,6 @@ function updateMovieData(modalContentElement, movieDetailedData) {
 
 }
 
-// Get the modal
-var modalElements = document.querySelectorAll(".modal");
-
-// Generate HTML modal template
 function generateModalHTML(id) {
     let modalHTMLOutput = `<!-- Modal content -->
     <div class="modal-content">
@@ -182,14 +172,9 @@ function generateModalHTML(id) {
 }
 
 
-// Get the button that opens the modal
-var modalTriggerElements = document.querySelectorAll(".modal__trigger");
-
-// Get the <span> element that closes the modal
-var spanElements = document.querySelectorAll(".close");
-
-// When the user clicks on the modal__triggers, generate HTML, update data and open the modal
+// Click Events functions
 function clickModal(moviesDetailedData) {
+    // When the user clicks on the modal__triggers, generate HTML, update data and open the modal
     let sections = document.querySelectorAll("section");
     for (let section of sections) {
         let carousels = Array.prototype.slice.call(section.querySelectorAll(".carousel__movie"));
@@ -198,8 +183,15 @@ function clickModal(moviesDetailedData) {
             let modal = carousel.querySelector(".modal");
             modalTrigger.onclick = async function () {
                 if (modal.innerHTML === "") {
+                    // Generate placeholder
                     modal.innerHTML = generateModalHTML(section.id);
+                    // Update data
                     updateMovieData(modal, await getMovieDetails(moviesDetailedData[section.id][carousels.indexOf(carousel)].id));
+                    // Close button
+                    spanElement = modal.querySelector(".close")
+                    spanElement.onclick = function () {
+                        modal.style.display = "none";
+                    }
                 }
                 modal.style.display = "block";
             }
@@ -207,36 +199,41 @@ function clickModal(moviesDetailedData) {
     }
 }
 
-// When the user clicks on the Hero Button, generate HTML, update data and open the modal
- function clickHeroButton(moviesDetailedData) {
+function clickHeroButton(moviesDetailedData) {
+    // When the user clicks on the Hero Button, generate HTML, update data and open the modal
     let bestMovie = document.querySelector("#best-movie");
     let modalTrigger = bestMovie.querySelector(".modal__trigger");
     let modal = bestMovie.querySelector(".modal");
     modalTrigger.onclick = async function () {
         if (modal.innerHTML === "") {
+            // Generate placeholder
             modal.innerHTML = generateModalHTML("best-movie");
+            // Update data
             updateMovieData(modal, moviesDetailedData);
+            // Close button
+            spanElement = modal.querySelector(".close")
+            spanElement.onclick = function () {
+                modal.style.display = "none";
+            }
         }
         modal.style.display = "block";
     }
 }
 
-// When the user clicks on <span> (x), close the modal
-for (let i = 0; i < spanElements.length; i++) {
-    spanElements[i].onclick = function () {
-        modalElements[i].style.display = "none";
-    }
-}
-// When the user clicks anywhere outside of the modal, close it
+
+// Closing Events for all modals
+var modalElements = document.querySelectorAll(".modal");
+
 window.onclick = function (event) {
+    // When the user clicks anywhere outside of the modal, close it
     for (let i = 0; i < modalElements.length; i++) {
         if (event.target == modalElements[i]) {
             modalElements[i].style.display = "none";
         }
     }
 }
-// When the user press EscapeKey, close it
 window.addEventListener('keydown', function (event) {
+    // When the user press EscapeKey, close it
     for (let i = 0; i < modalElements.length; i++) {
         if (event.key === 'Escape') {
             modalElements[i].style.display = 'none'
