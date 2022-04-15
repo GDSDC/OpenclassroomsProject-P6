@@ -32,44 +32,50 @@ async function getMoviesCategoriesData(moviesCategoryParams) {
 
 window.onload = async function () {
     // Getting data
-    const moviesCategoriesDetailedData = await getMoviesCategoriesData(MOVIES_CATEGORIES_PARAMS);
+    const moviesCategoriesData = await getMoviesCategoriesData(MOVIES_CATEGORIES_PARAMS);
 
-    const bestRatedMovieDetailed = moviesCategoriesDetailedData["top-rated"].splice(0, 1);
+    const bestRatedMovieDetailed = await getMovieDetails(moviesCategoriesData["top-rated"].splice(0, 1)[0].id);
+
+    console.log(moviesCategoriesData["top-rated"]);
+    console.log(moviesCategoriesData["category-1"]);
+    console.log(moviesCategoriesData["category-2"]);
+    console.log(moviesCategoriesData["category-3"]);
 
     // Click events
-    clickModal(moviesCategoriesDetailedData);
+    clickModal(moviesCategoriesData);
     clickHeroButton(bestRatedMovieDetailed);
 
 
-    // // Update best-movie section
-    // updateSectionHero('best-movie', moviesCategoriesData["top-rated"][0]);
-    //
-    // // Update top-rated section
-    // updateSectioncarousel('top-rated', moviesCategoriesData["top-rated"], start = 1);
-    //
-    // // Update category-1 section
-    // updateSectioncarousel('category-1', moviesCategoriesData["category-1"]);
-    //
-    // // Update category-2 section
-    // updateSectioncarousel('category-2', moviesCategoriesData["category-2"]);
-    //
-    // // Update category-3 section
-    // updateSectioncarousel('category-3', moviesCategoriesData["category-1"]);
+    // Update best-movie section
+    updateSectionHero("best-movie", bestRatedMovieDetailed);
+
+    // Update top-rated section
+    updateSectioncarousel("top-rated", moviesCategoriesData["top-rated"]);
+
+    // Update category-1 section
+    updateSectioncarousel("category-1", moviesCategoriesData["category-1"]);
+
+
+    // Update category-2 section
+    updateSectioncarousel("category-2", moviesCategoriesData["category-2"]);
+
+    // Update category-3 section
+    updateSectioncarousel("category-3", moviesCategoriesData["category-3"]);
 
 
 }
 
 
-async function updateSectioncarousel(sectionId, categoryDetailedData, start = 0) {
+async function updateSectioncarousel(sectionId, categoryData) {
 
     // Section Selection
     let section = document.querySelector(`#${sectionId}`);
 
     // Update thumbnails and modals
-    let carouselElements = section.querySelectorAll('.carousel__movie');
+    let carouselThumbnails = section.querySelectorAll('.carousel__movie__thumbnail');
 
-    for (let i = start; i < CAROUSEL_SIZE + start; i++) {
-        updateMovieData(carouselElements[i - start], categoryDetailedData[i]);
+    for (let i = 0; i < CAROUSEL_SIZE ; i++) {
+        carouselThumbnails[i].src = categoryData[i].image_url;
     }
 
 
@@ -79,23 +85,18 @@ function updateSectionHero(sectionId, movieDetailedData) {
     // Section Selection
     let section = document.querySelector(`#${sectionId}`);
 
-    // Update Hero Info
-    updateHeroInfo(section, movieDetailedData);
-
-    // Update Modal
-    updateMovieData(section, movieDetailedData);
-
-}
-
-function updateHeroInfo(modalContentElement, movieDetailedData) {
-
     // hero title
-    let heroTitle = modalContentElement.querySelector("#hero-title");
+    let heroTitle = section.querySelector("#hero-title");
     heroTitle.textContent = movieDetailedData.title;
 
     // hero description
-    let heroDescription = modalContentElement.querySelector("#hero-description");
+    let heroDescription = section.querySelector("#hero-description");
     heroDescription.textContent = movieDetailedData.description;
+
+    // hero image
+    let heroImage = section.querySelector(".hero__imgage");
+    heroImage.src = movieDetailedData.image_url;
+
 
 }
 
