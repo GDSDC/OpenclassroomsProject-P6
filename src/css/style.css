@@ -158,10 +158,8 @@ li {
 }
 
 .modal__movie__thumbnail {
-    position: relative;
-    left: 25%;
     margin-bottom: 5%;
-
+    height: calc(13vw * 1.47);
 }
 
 /* The Close Button */
