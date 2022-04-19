@@ -20,7 +20,7 @@ async function getMovies(searchParams) {
 
 async function getMoviesCategoriesData(moviesCategoryParams) {
     let result = Array.from(await Promise.all(moviesCategoryParams.map((params) => getMovies(params))));
-    return resultDict = {
+    return {
         "top-rated": result[0],
         "category-1": result[1],
         "category-2": result[2],
@@ -56,8 +56,8 @@ window.onload = async function () {
     updateSectioncarousel("category-3", moviesCategoriesData["category-3"]);
 
     // Click events
-    clickModal(moviesCategoriesData);
-    clickHeroButton(bestRatedMovieDetailed);
+    addModalOnClickBehavior(moviesCategoriesData);
+    addHeroButtonOnClickBehavior(bestRatedMovieDetailed);
 }
 
 
@@ -174,7 +174,7 @@ function generateModalHTML(id) {
 
 
 // Click Events functions
-function clickModal(moviesDetailedData) {
+function addModalOnClickBehavior(moviesDetailedData) {
     // When the user clicks on the modal__triggers, generate HTML, update data and open the modal
     let sections = document.querySelectorAll("section");
     for (let section of sections) {
@@ -200,7 +200,7 @@ function clickModal(moviesDetailedData) {
     }
 }
 
-function clickHeroButton(moviesDetailedData) {
+function addHeroButtonOnClickBehavior(moviesDetailedData) {
     // When the user clicks on the Hero Button, generate HTML, update data and open the modal
     let bestMovie = document.querySelector("#best-movie");
     let modalTrigger = bestMovie.querySelector(".modal__trigger");
