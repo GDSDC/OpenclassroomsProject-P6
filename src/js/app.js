@@ -197,7 +197,7 @@ function addModalOnClickBehavior(moviesDetailedData) {
             let modalTrigger = carousel.querySelector(".modal__trigger");
             let modal = carousel.querySelector(".modal");
             modalTrigger.onclick = async function () {
-                if (modal.innerHTML === "") {
+                if (!modal.innerHTML) {
                     // Generate placeholder
                     modal.innerHTML = generateModalHTML(section.id);
                     // Update data
