@@ -252,7 +252,7 @@ window.onclick = function (event) {
 window.addEventListener('keydown', function (event) {
     // When the user press EscapeKey, close it
     for (let i = 0; i < modalElements.length; i++) {
-        if (event.key === 'Escape') {
+        if (event.code === 'Escape') {
             modalElements[i].style.display = 'none'
         }
     }
