@@ -102,6 +102,11 @@ li {
     flex-direction: row;
 }
 
+.carousel__header {
+    display: flex;
+    flex-direction:  row;
+    justify-content: space-between;
+}
 
 .carousel__movie {
     margin: 0.4vw;
