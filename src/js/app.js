@@ -19,7 +19,7 @@ async function getMovies(searchParams) {
 }
 
 async function getMoviesCategoriesData(moviesCategoryParams) {
-    let result = Array.from(await Promise.all(moviesCategoryParams.map((params) => getMovies(params))));
+    const result = Array.from(await Promise.all(moviesCategoryParams.map((params) => getMovies(params))));
     return {
         "top-rated": result[0],
         "category-1": result[1],
@@ -65,7 +65,7 @@ window.onload = async function () {
 function updateSectioncarousel(sectionId, categoryData) {
 
     // Section Selection
-    let section = document.querySelector(`#${sectionId}`);
+    const section = document.querySelector(`#${sectionId}`);
 
     // Update thumbnails and modals
     let carouselThumbnails = section.querySelectorAll('.carousel__movie__thumbnail');
@@ -79,7 +79,7 @@ function updateSectioncarousel(sectionId, categoryData) {
 
 function updateSectionHero(sectionId, {title, description, image_url: imageUrl}) {
     // Section Selection
-    let section = document.querySelector(`#${sectionId}`);
+    const section = document.querySelector(`#${sectionId}`);
 
     // hero title
     let heroTitle = section.querySelector("#hero-title");
@@ -97,7 +97,7 @@ function updateSectionHero(sectionId, {title, description, image_url: imageUrl})
 }
 
 function updateMovieData(modalContentElement, movieDetailedData) {
-    let {
+    const {
         image_url: imageUrl,
         title,
         genres,
@@ -154,7 +154,7 @@ function updateMovieData(modalContentElement, movieDetailedData) {
 
     // movie-box-office-score
     let movieBoxOfficeScoreElement = modalContentElement.querySelector('#movie-box-office-score');
-    movieBoxOfficeScoreElement.textContent = `Résultat au Box Office : ${worldwideGrossIncome} $;
+    movieBoxOfficeScoreElement.textContent = `Résultat au Box Office : ${worldwideGrossIncome} $`;
 
     // movie-summary
     let movieSummaryElement = modalContentElement.querySelector('#movie-summary');
@@ -190,7 +190,7 @@ function generateModalHTML(id) {
 // Click Events functions
 function addModalOnClickBehavior(moviesDetailedData) {
     // When the user clicks on the modal__triggers, generate HTML, update data and open the modal
-    let sections = document.querySelectorAll("section");
+    const sections = document.querySelectorAll("section");
     for (let section of sections) {
         let carousels = Array.prototype.slice.call(section.querySelectorAll(".carousel__card"));
         for (let carousel of carousels) {
@@ -242,7 +242,7 @@ var modalElements = document.querySelectorAll(".modal");
 window.onclick = function (event) {
     // When the user clicks anywhere outside of the modal, close it
     for (let i = 0; i < modalElements.length; i++) {
-        if (event.target == modalElements[i]) {
+        if (event.target === modalElements[i]) {
             modalElements[i].style.display = "none";
         }
     }
