@@ -178,7 +178,7 @@ function clickModal(moviesDetailedData) {
     // When the user clicks on the modal__triggers, generate HTML, update data and open the modal
     let sections = document.querySelectorAll("section");
     for (let section of sections) {
-        let carousels = Array.prototype.slice.call(section.querySelectorAll(".carousel__movie"));
+        let carousels = Array.prototype.slice.call(section.querySelectorAll(".carousel__card"));
         for (let carousel of carousels) {
             let modalTrigger = carousel.querySelector(".modal__trigger");
             let modal = carousel.querySelector(".modal");

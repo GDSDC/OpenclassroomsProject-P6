@@ -97,7 +97,7 @@ li {
 }
 
 
-.carousel {
+.carousel__content {
     display: flex;
     flex-direction: row;
 }
@@ -108,7 +108,7 @@ li {
     justify-content: space-between;
 }
 
-.carousel__movie {
+.carousel__card {
     margin: 0.4vw;
     /*border: 2px solid lightseagreen;*/
     flex: 0 0 13%;
@@ -121,7 +121,7 @@ li {
     width: 100%;
 }
 
-.carousel__movie:hover {
+.carousel__card:hover {
     border: 2px solid black;
 }
 
