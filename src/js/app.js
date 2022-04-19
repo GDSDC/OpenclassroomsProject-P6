@@ -19,8 +19,10 @@ async function getMovies(searchParams) {
 }
 
 async function getMoviesCategoriesData(moviesCategoryParams) {
-    const result = Array.from(await Promise.all(moviesCategoryParams.map((params) => getMovies(params))));
+    let result = Array.from(await Promise.all(moviesCategoryParams.map((params) => getMovies(params))));
+    const bestRatedMovieDetailed = result[0].splice(0, 1);
     return {
+        "best-movie" : bestRatedMovieDetailed,
         "top-rated": result[0],
         "category-1": result[1],
         "category-2": result[2],
@@ -38,10 +40,8 @@ window.onload = async function () {
     // Getting data
     const moviesCategoriesData = await getMoviesCategoriesData(MOVIES_CATEGORIES_PARAMS);
 
-    const bestRatedMovieDetailed = await getMovieDetails(moviesCategoriesData["top-rated"].splice(0, 1)[0].id);
-
     // Update best-movie section
-    updateSectionHero("best-movie", bestRatedMovieDetailed);
+    updateSectionHero("best-movie", moviesCategoriesData["best-movie"][0].id);
 
     // Update top-rated section
     updateSectioncarousel("top-rated", moviesCategoriesData["top-rated"]);
@@ -57,7 +57,6 @@ window.onload = async function () {
 
     // Click events
     addModalOnClickBehavior(moviesCategoriesData);
-    addHeroButtonOnClickBehavior(bestRatedMovieDetailed);
 }
 
 
@@ -77,7 +76,10 @@ function updateSectioncarousel(sectionId, categoryData) {
 
 }
 
-function updateSectionHero(sectionId, {title, description, image_url: imageUrl}) {
+async function updateSectionHero(sectionId, movieID) {
+    // Get Data
+    let {title, description, image_url: imageUrl} = await getMovieDetails(movieID);
+
     // Section Selection
     const section = document.querySelector(`#${sectionId}`);
 
@@ -192,16 +194,15 @@ function addModalOnClickBehavior(moviesDetailedData) {
     // When the user clicks on the modal__triggers, generate HTML, update data and open the modal
     const sections = document.querySelectorAll("section");
     for (let section of sections) {
-        let carousels = Array.prototype.slice.call(section.querySelectorAll(".carousel__card"));
-        for (let carousel of carousels) {
-            let modalTrigger = carousel.querySelector(".modal__trigger");
-            let modal = carousel.querySelector(".modal");
+        const modalTriggers = Array.from(section.querySelectorAll(".modal__trigger"));
+        for (let modalTrigger of modalTriggers) {
+            let modal = modalTrigger.parentNode.querySelector(".modal");
             modalTrigger.onclick = async function () {
                 if (!modal.innerHTML) {
                     // Generate placeholder
                     modal.innerHTML = generateModalHTML(section.id);
                     // Update data
-                    updateMovieData(modal, await getMovieDetails(moviesDetailedData[section.id][carousels.indexOf(carousel)].id));
+                    updateMovieData(modal, await getMovieDetails(moviesDetailedData[section.id][modalTriggers.indexOf(modalTrigger)].id));
                     // Close button
                     const spanElement = modal.querySelector(".close")
                     spanElement.onclick = function () {
@@ -213,28 +214,6 @@ function addModalOnClickBehavior(moviesDetailedData) {
         }
     }
 }
-
-function addHeroButtonOnClickBehavior(moviesDetailedData) {
-    // When the user clicks on the Hero Button, generate HTML, update data and open the modal
-    let bestMovie = document.querySelector("#best-movie");
-    let modalTrigger = bestMovie.querySelector(".modal__trigger");
-    let modal = bestMovie.querySelector(".modal");
-    modalTrigger.onclick = async function () {
-        if (modal.innerHTML === "") {
-            // Generate placeholder
-            modal.innerHTML = generateModalHTML("best-movie");
-            // Update data
-            updateMovieData(modal, moviesDetailedData);
-            // Close button
-            const spanElement = modal.querySelector(".close")
-            spanElement.onclick = function () {
-                modal.style.display = "none";
-            }
-        }
-        modal.style.display = "flex";
-    }
-}
-
 
 // Closing Events for all modals
 var modalElements = document.querySelectorAll(".modal");
