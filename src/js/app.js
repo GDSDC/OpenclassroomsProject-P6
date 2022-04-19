@@ -203,7 +203,7 @@ function addModalOnClickBehavior(moviesDetailedData) {
                     // Update data
                     updateMovieData(modal, await getMovieDetails(moviesDetailedData[section.id][carousels.indexOf(carousel)].id));
                     // Close button
-                    spanElement = modal.querySelector(".close")
+                    const spanElement = modal.querySelector(".close")
                     spanElement.onclick = function () {
                         modal.style.display = "none";
                     }
@@ -226,12 +226,12 @@ function addHeroButtonOnClickBehavior(moviesDetailedData) {
             // Update data
             updateMovieData(modal, moviesDetailedData);
             // Close button
-            spanElement = modal.querySelector(".close")
+            const spanElement = modal.querySelector(".close")
             spanElement.onclick = function () {
                 modal.style.display = "none";
             }
         }
-        modal.style.display = "block";
+        modal.style.display = "flex";
     }
 }
 
