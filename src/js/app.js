@@ -77,74 +77,88 @@ function updateSectioncarousel(sectionId, categoryData) {
 
 }
 
-function updateSectionHero(sectionId, movieDetailedData) {
+function updateSectionHero(sectionId, {title, description, image_url: imageUrl}) {
     // Section Selection
     let section = document.querySelector(`#${sectionId}`);
 
     // hero title
     let heroTitle = section.querySelector("#hero-title");
-    heroTitle.textContent = movieDetailedData.title;
+    heroTitle.textContent = title;
 
     // hero description
     let heroDescription = section.querySelector("#hero-description");
-    heroDescription.textContent = movieDetailedData.description;
+    heroDescription.textContent = description;
 
     // hero image
     let heroImage = section.querySelector(".hero__imgage");
-    heroImage.src = movieDetailedData.image_url;
+    heroImage.src = imageUrl;
 
 
 }
 
 function updateMovieData(modalContentElement, movieDetailedData) {
+    let {
+        image_url: imageUrl,
+        title,
+        genres,
+        year,
+        rated,
+        imdb_score: imdbScore,
+        directors,
+        actors,
+        duration,
+        countries,
+        worldwide_gross_income: worldwideGrossIncome,
+        long_description: longDescription
+    } = movieDetailedData;
 
     // movie thumbnail
     let modalMovieThumbnailElement = modalContentElement.querySelectorAll("img");
-    modalMovieThumbnailElement.forEach(element => element.src = movieDetailedData.image_url);
+    modalMovieThumbnailElement.forEach(element => element.src = imageUrl);
 
     // movie-title
     let movieTitleElement = modalContentElement.querySelector('#movie-title');
-    movieTitleElement.textContent = 'Titre : ' + movieDetailedData.title;
+    movieTitleElement.textContent = `Titre : ${title}`;
 
     // movie-genres
     let movieGenresElement = modalContentElement.querySelector('#movie-genres');
-    movieGenresElement.textContent = 'Genre Complet : ' + movieDetailedData.genres;
+    movieGenresElement.textContent = `Genre Complet : ${genres}`;
 
     // movie-year
     let movieYearElement = modalContentElement.querySelector('#movie-year');
-    movieYearElement.textContent = 'Date de sortie : ' + movieDetailedData.year;
+    movieYearElement.textContent = `Date de sortie : ${year}`;
 
     // movie-rated
     let movieRatedElement = modalContentElement.querySelector('#movie-rated');
-    movieRatedElement.textContent = 'Rated : ' + movieDetailedData.rated;
+    movieRatedElement.textContent = `Rated : ${rated}`;
 
     // movie-imdb-score
     let movieImdbScoreElement = modalContentElement.querySelector('#movie-imdb-score');
-    movieImdbScoreElement.textContent = 'Score Imdb : ' + movieDetailedData.imdb_score;
+    movieImdbScoreElement.textContent = `Score Imdb : ${imdbScore}`;
 
     // movie-directors
     let movieDirectorsElement = modalContentElement.querySelector('#movie-directors');
-    movieDirectorsElement.textContent = 'Réalisateur : ' + movieDetailedData.directors;
+    movieDirectorsElement.textContent = `Réalisateur : ${directors}`;
 
     // movie-actors
     let movieActorsElement = modalContentElement.querySelector('#movie-actors');
-    movieActorsElement.textContent = 'Liste des acteurs : ' + movieDetailedData.actors;
+    movieActorsElement.textContent = `Liste des acteurs : ${actors}`;
 
     // movie-duration
     let movieDurationElement = modalContentElement.querySelector('#movie-duration');
-    movieDurationElement.textContent = 'Durée :  ' + movieDetailedData.duration + ' minutes';
+    movieDurationElement.textContent = `Durée :  ${duration} minutes`;
 
     // movie-country
     let movieCountryElement = modalContentElement.querySelector('#movie-country');
-    movieCountryElement.textContent = 'Pays d\'origine : ' + movieDetailedData.countries;
+    movieCountryElement.textContent = `Pays d\'origine : ${countries}`;
 
     // movie-box-office-score
     let movieBoxOfficeScoreElement = modalContentElement.querySelector('#movie-box-office-score');
-    movieBoxOfficeScoreElement.textContent = 'Résultat au Box Office : ' + movieDetailedData.worldwide_gross_income + ' $';
+    movieBoxOfficeScoreElement.textContent = `Résultat au Box Office : ${worldwideGrossIncome} $;
 
     // movie-summary
     let movieSummaryElement = modalContentElement.querySelector('#movie-summary');
-    movieSummaryElement.textContent = 'Résumé du film : ' + movieDetailedData.long_description;
+    movieSummaryElement.textContent = `Résumé du film : ${longDescription}`;
 
 
 }
