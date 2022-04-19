@@ -20,7 +20,7 @@ async function getMovies(searchParams) {
 
 async function getMoviesCategoriesData(moviesCategoryParams) {
     let result = Array.from(await Promise.all(moviesCategoryParams.map((params) => getMovies(params))));
-    return resultDict = {
+    return {
         "top-rated": result[0],
         "category-1": result[1],
         "category-2": result[2],
@@ -44,25 +44,26 @@ window.onload = async function () {
     updateSectionHero("best-movie", bestRatedMovieDetailed);
 
     // Update top-rated section
-    updateSectioncarousel("top-rated", moviesCategoriesData["top-rated"]);
+    updateSectionCarousel("top-rated", moviesCategoriesData["top-rated"]);
 
     // Update category-1 section
-    updateSectioncarousel("category-1", moviesCategoriesData["category-1"]);
+    updateSectionCarousel("category-1", moviesCategoriesData["category-1"]);
 
     // Update category-2 section
-    updateSectioncarousel("category-2", moviesCategoriesData["category-2"]);
+    updateSectionCarousel("category-2", moviesCategoriesData["category-2"]);
 
     // Update category-3 section
-    updateSectioncarousel("category-3", moviesCategoriesData["category-3"]);
+    updateSectionCarousel("category-3", moviesCategoriesData["category-3"]);
+
 
     // Click events
-    clickModal(moviesCategoriesData);
-    clickHeroButton(bestRatedMovieDetailed);
+    addModalOnClickBehavior(moviesCategoriesData);
+    addHeroButtonOnClickBehavior(bestRatedMovieDetailed);
 }
 
 
 // Udpate DOM functions
-function updateSectioncarousel(sectionId, categoryData) {
+function updateSectionCarousel(sectionId, categoryData) {
 
     // Section Selection
     let section = document.querySelector(`#${sectionId}`);
@@ -77,74 +78,75 @@ function updateSectioncarousel(sectionId, categoryData) {
 
 }
 
-function updateSectionHero(sectionId, movieDetailedData) {
+
+function updateSectionHero(sectionId, {title, description, image_url: imageUrl}) {
+
     // Section Selection
     let section = document.querySelector(`#${sectionId}`);
 
     // hero title
     let heroTitle = section.querySelector("#hero-title");
-    heroTitle.textContent = movieDetailedData.title;
+    heroTitle.textContent = title;
 
     // hero description
     let heroDescription = section.querySelector("#hero-description");
-    heroDescription.textContent = movieDetailedData.description;
+    heroDescription.textContent = description;
 
     // hero image
     let heroImage = section.querySelector(".hero__imgage");
-    heroImage.src = movieDetailedData.image_url;
-
-
+    heroImage.src = imageUrl;
 }
 
-function updateMovieData(modalContentElement, movieDetailedData) {
+function updateMovieData(modalContentElement, {actors, countries, directors, duration, genres, image_url, imdb_score,
+    long_description, rated, title, worldwide_gross_income, year}) {
 
     // movie thumbnail
     let modalMovieThumbnailElement = modalContentElement.querySelectorAll("img");
-    modalMovieThumbnailElement.forEach(element => element.src = movieDetailedData.image_url);
+    modalMovieThumbnailElement.forEach(element => element.src = image_url);
 
     // movie-title
     let movieTitleElement = modalContentElement.querySelector('#movie-title');
-    movieTitleElement.textContent = 'Titre : ' + movieDetailedData.title;
+    movieTitleElement.textContent = 'Titre : ' + title;
 
     // movie-genres
     let movieGenresElement = modalContentElement.querySelector('#movie-genres');
-    movieGenresElement.textContent = 'Genre Complet : ' + movieDetailedData.genres;
+    movieGenresElement.textContent = 'Genre Complet : ' + genres;
 
     // movie-year
     let movieYearElement = modalContentElement.querySelector('#movie-year');
-    movieYearElement.textContent = 'Date de sortie : ' + movieDetailedData.year;
+    movieYearElement.textContent = 'Date de sortie : ' + year;
 
     // movie-rated
     let movieRatedElement = modalContentElement.querySelector('#movie-rated');
-    movieRatedElement.textContent = 'Rated : ' + movieDetailedData.rated;
+    movieRatedElement.textContent = 'Rated : ' + rated;
 
     // movie-imdb-score
     let movieImdbScoreElement = modalContentElement.querySelector('#movie-imdb-score');
-    movieImdbScoreElement.textContent = 'Score Imdb : ' + movieDetailedData.imdb_score;
+    movieImdbScoreElement.textContent = 'Score Imdb : ' + imdb_score;
 
     // movie-directors
     let movieDirectorsElement = modalContentElement.querySelector('#movie-directors');
-    movieDirectorsElement.textContent = 'Réalisateur : ' + movieDetailedData.directors;
+    movieDirectorsElement.textContent = 'Réalisateur : ' + directors;
 
     // movie-actors
     let movieActorsElement = modalContentElement.querySelector('#movie-actors');
-    movieActorsElement.textContent = 'Liste des acteurs : ' + movieDetailedData.actors;
+    movieActorsElement.textContent = 'Liste des acteurs : ' + actors;
 
     // movie-duration
     let movieDurationElement = modalContentElement.querySelector('#movie-duration');
-    movieDurationElement.textContent = 'Durée :  ' + movieDetailedData.duration + ' minutes';
+    movieDurationElement.textContent = 'Durée :  ' + duration + ' minutes';
 
     // movie-country
     let movieCountryElement = modalContentElement.querySelector('#movie-country');
-    movieCountryElement.textContent = 'Pays d\'origine : ' + movieDetailedData.countries;
+    movieCountryElement.textContent = 'Pays d\'origine : ' + countries;
 
     // movie-box-office-score
     let movieBoxOfficeScoreElement = modalContentElement.querySelector('#movie-box-office-score');
-    movieBoxOfficeScoreElement.textContent = 'Résultat au Box Office : ' + movieDetailedData.worldwide_gross_income + ' $';
+    movieBoxOfficeScoreElement.textContent = 'Résultat au Box Office : ' + worldwide_gross_income + ' $';
 
     // movie-summary
     let movieSummaryElement = modalContentElement.querySelector('#movie-summary');
-    movieSummaryElement.textContent = 'Résumé du film : ' + movieDetailedData.long_description;
+    movieSummaryElement.textContent = 'Résumé du film : ' + long_description;
 
 
 }
@@ -174,7 +176,7 @@ function generateModalHTML(id) {
 
 
 // Click Events functions
-function clickModal(moviesDetailedData) {
+function addModalOnClickBehavior(moviesDetailedData) {
     // When the user clicks on the modal__triggers, generate HTML, update data and open the modal
     let sections = document.querySelectorAll("section");
     for (let section of sections) {
@@ -183,13 +185,13 @@ function clickModal(moviesDetailedData) {
             let modalTrigger = carousel.querySelector(".modal__trigger");
             let modal = carousel.querySelector(".modal");
             modalTrigger.onclick = async function () {
-                if (modal.innerHTML === "") {
+                if (!modal.innerHTML) {
                     // Generate placeholder
                     modal.innerHTML = generateModalHTML(section.id);
                     // Update data
                     updateMovieData(modal, await getMovieDetails(moviesDetailedData[section.id][carousels.indexOf(carousel)].id));
                     // Close button
-                    spanElement = modal.querySelector(".close")
+                    const spanElement = modal.querySelector(".close")
                     spanElement.onclick = function () {
                         modal.style.display = "none";
                     }
@@ -200,19 +202,19 @@ function clickModal(moviesDetailedData) {
     }
 }
 
-function clickHeroButton(moviesDetailedData) {
+function addHeroButtonOnClickBehavior(moviesDetailedData) {
     // When the user clicks on the Hero Button, generate HTML, update data and open the modal
     let bestMovie = document.querySelector("#best-movie");
     let modalTrigger = bestMovie.querySelector(".modal__trigger");
     let modal = bestMovie.querySelector(".modal");
     modalTrigger.onclick = async function () {
-        if (modal.innerHTML === "") {
+        if (!modal.innerHTML) {
             // Generate placeholder
             modal.innerHTML = generateModalHTML("best-movie");
             // Update data
             updateMovieData(modal, moviesDetailedData);
             // Close button
-            spanElement = modal.querySelector(".close")
+            const spanElement = modal.querySelector(".close")
             spanElement.onclick = function () {
                 modal.style.display = "none";
             }
@@ -228,7 +230,7 @@ var modalElements = document.querySelectorAll(".modal");
 window.onclick = function (event) {
     // When the user clicks anywhere outside of the modal, close it
     for (let i = 0; i < modalElements.length; i++) {
-        if (event.target == modalElements[i]) {
+        if (event.target === modalElements[i]) {
             modalElements[i].style.display = "none";
         }
     }

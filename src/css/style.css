@@ -176,3 +176,10 @@ li {
     text-decoration: none;
     cursor: pointer;
 }
+
+
+.carousel__header {
+    display: flex;
+    flex-direction:  row;
+    justify-content: space-between;
+}
