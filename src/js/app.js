@@ -22,7 +22,7 @@ async function getMoviesCategoriesData(moviesCategoryParams) {
     let result = Array.from(await Promise.all(moviesCategoryParams.map((params) => getMovies(params))));
     const bestRatedMovieDetailed = result[0].splice(0, 1);
     return {
-        "best-movie" : bestRatedMovieDetailed,
+        "best-movie": bestRatedMovieDetailed,
         "top-rated": result[0],
         "category-1": result[1],
         "category-2": result[2],
@@ -57,6 +57,7 @@ window.onload = async function () {
 
     // Click events
     addModalOnClickBehavior(moviesCategoriesData);
+    addScrollCarouselBehavior();
 }
 
 
@@ -237,3 +238,23 @@ window.addEventListener('keydown', function (event) {
     }
 })
 
+// Scroll Carousel Events
+function addScrollCarouselBehavior() {
+    const scrollButtons = document.querySelectorAll(".scroll__carousel");
+    for (let scrollButton of scrollButtons) {
+        scrollCompleted = 0;
+        let carouselToScroll = scrollButton.parentElement.parentElement.parentElement.querySelector(".carousel__content");
+        var slideVar = setInterval(function () {
+            if (scrollButton.classList.contains("left")) {
+                container.scrollLeft -= 10;
+            } else if (scrollButton.classList.contains("right")) {
+                container.scrollLeft += 10;
+            }
+            scrollCompleted += 10;
+            if (scrollCompleted >= 100) {
+                carouselToScroll.clearInterval(slideVar);
+            }
+            // TODO : make it work
+        }, 50);
+    }
+}
