@@ -62,7 +62,7 @@ window.onload = async function () {
 
 
 // Udpate DOM functions
-function updateSectioncarousel(sectionId, categoryData) {
+function updateSectioncarousel(sectionId, sectionData) {
 
     // Section Selection
     const section = document.querySelector(`#${sectionId}`);
@@ -71,7 +71,7 @@ function updateSectioncarousel(sectionId, categoryData) {
     let carouselThumbnails = section.querySelectorAll('.carousel__movie__thumbnail');
 
     for (let i = 0; i < CAROUSEL_SIZE; i++) {
-        carouselThumbnails[i].src = categoryData[i].image_url;
+        carouselThumbnails[i].src = sectionData[i].image_url;
     }
 
 
