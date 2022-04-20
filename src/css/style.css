@@ -139,6 +139,46 @@ header li {
     border-color: lightgray;
 }
 
+.carousel__button--prev,
+.carousel__button--next {
+    position: relative;
+    top: 65%;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: #FFF;
+    transform: translateY(-50%);
+    border-radius: 40%;
+    cursor: pointer;
+    z-index: 1001; /* Sit on top of everything */
+    border: 1px solid black;
+}
+
+.carousel__button--prev {
+    left: 0;
+}
+
+.carousel__button--next {
+    right: 0;
+}
+
+.carousel__button--prev::after,
+.carousel__button--next::after {
+    content: " ";
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    top: 50%;
+    left: 54%;
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
+    transform: translate(-50%, -50%) rotate(135deg);
+}
+
+.carousel__button--next::after {
+    left: 47%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */

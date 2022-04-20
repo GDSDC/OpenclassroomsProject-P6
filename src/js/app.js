@@ -248,9 +248,9 @@ function addScrollCarouselBehavior() {
         // Scroll value responsive
         let scrollValue = carouselToScroll.querySelector(".carousel__card").offsetWidth + window.innerWidth * 0.008;
         scrollButton.onclick = function () {
-            if (scrollButton.classList.contains("left")) {
+            if (scrollButton.classList.contains("carousel__button--prev")) {
                 carouselToScroll.scrollLeft -= scrollValue;
-            } else if (scrollButton.classList.contains("right")) {
+            } else if (scrollButton.classList.contains("carousel__button--next")) {
                 console.log(scrollValue);
                 carouselToScroll.scrollLeft += scrollValue;
             }
