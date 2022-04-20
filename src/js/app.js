@@ -242,19 +242,19 @@ window.addEventListener('keydown', function (event) {
 function addScrollCarouselBehavior() {
     const scrollButtons = document.querySelectorAll(".scroll__carousel");
     for (let scrollButton of scrollButtons) {
-        scrollCompleted = 0;
         let carouselToScroll = scrollButton.parentElement.parentElement.parentElement.querySelector(".carousel__content");
-        var slideVar = setInterval(function () {
+        // Initialization when page load
+        carouselToScroll.scrollLeft = 0;
+        // Scroll value responsive
+        let scrollValue = carouselToScroll.querySelector(".carousel__card").offsetWidth + window.innerWidth * 0.01;
+        scrollButton.onclick = function () {
             if (scrollButton.classList.contains("left")) {
-                container.scrollLeft -= 10;
+                carouselToScroll.scrollLeft -= scrollValue;
             } else if (scrollButton.classList.contains("right")) {
-                container.scrollLeft += 10;
+                console.log(scrollValue);
+                carouselToScroll.scrollLeft += scrollValue;
             }
-            scrollCompleted += 10;
-            if (scrollCompleted >= 100) {
-                carouselToScroll.clearInterval(slideVar);
-            }
-            // TODO : make it work
-        }, 50);
+        }
     }
 }
+

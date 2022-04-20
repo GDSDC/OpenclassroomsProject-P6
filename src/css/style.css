@@ -113,7 +113,7 @@ header li {
     display: flex;
     flex-direction: row;
     overflow-y: hidden;
-    overflow-x: auto;
+    overflow-x: hidden;
 }
 
 .carousel__header {
