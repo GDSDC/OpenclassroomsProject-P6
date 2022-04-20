@@ -246,7 +246,7 @@ function addScrollCarouselBehavior() {
         // Initialization when page load
         carouselToScroll.scrollLeft = 0;
         // Scroll value responsive
-        let scrollValue = carouselToScroll.querySelector(".carousel__card").offsetWidth + window.innerWidth * 0.01;
+        let scrollValue = carouselToScroll.querySelector(".carousel__card").offsetWidth + window.innerWidth * 0.008;
         scrollButton.onclick = function () {
             if (scrollButton.classList.contains("left")) {
                 carouselToScroll.scrollLeft -= scrollValue;
