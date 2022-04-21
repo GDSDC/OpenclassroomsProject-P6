@@ -149,7 +149,6 @@ section {
     transform: translateY(-50%);
     border-radius: 40%;
     cursor: pointer;
-    z-index: 1001; /* Sit on top of everything */
     border: 1px solid black;
 }
 

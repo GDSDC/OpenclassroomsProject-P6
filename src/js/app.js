@@ -19,7 +19,10 @@ async function getMovies(searchParams) {
 }
 
 async function getMoviesCategoriesData(moviesCategoryParams) {
-    let result = Array.from(await Promise.all(moviesCategoryParams.map((params) => getMovies(params))));
+    let result = Array.from(await Promise.all(
+            moviesCategoryParams.map((params) => getMovies(params))
+        )
+    );
     const bestRatedMovieDetailed = result[0].splice(0, 1);
     return {
         "best-movie": bestRatedMovieDetailed,
@@ -31,7 +34,8 @@ async function getMoviesCategoriesData(moviesCategoryParams) {
 }
 
 async function getMovieDetails(movieId) {
-    return fetch(API_URL + "/titles/" + movieId).then(response => response.json());
+    return fetch(API_URL + "/titles/" + movieId)
+        .then(response => response.json());
 }
 
 
@@ -203,7 +207,10 @@ function addModalOnClickBehavior(moviesDetailedData) {
                     // Generate placeholder
                     modal.innerHTML = generateModalHTML(section.id);
                     // Update data
-                    updateMovieData(modal, await getMovieDetails(moviesDetailedData[section.id][modalTriggers.indexOf(modalTrigger)].id));
+                    updateMovieData(modal, await getMovieDetails(
+                            moviesDetailedData[section.id][modalTriggers.indexOf(modalTrigger)].id
+                        )
+                    );
                     // Close button
                     const spanElement = modal.querySelector(".close")
                     spanElement.onclick = function () {
