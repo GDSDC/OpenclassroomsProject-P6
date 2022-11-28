@@ -1,8 +1,54 @@
-# OpenClassRooms Project-P6
+<h3 align="center">
+    <img alt="Logo" title="#logo" width="250px" src="/assets/16004298163529_P5.png">
+    <br>
+</h3>
 
-OpenClassRooms Project-P6 est un projet ayant un but d'apprentissage dans le cadre de la formation OpenClassRooms Développeur d'Application Python.
-Thème du projet : Développez une interface utilisateur pour une application web Python.
 
+# OpenClassrooms Projet P6
+
+- [Objectif](#obj)
+- [Compétences](#competences)
+- [Technologies](#techs)
+- [Requirements](#reqs)
+- [Architecture](#architecture)
+- [Configuration locale](#localconfig)
+- [Présentation](#presentation)
+
+<a id="obj"></a>
+## Objectif
+
+L’association JustStreamIt est connue pour ses newsletters de classement de films. Ces classements ont sauvé bien des soirées à ses abonnés toujours plus nombreux, comme le dit leur slogan : “Tu ne sais pas quoi regarder pour passer une bonne soirée ? Alors JustStreamIt”. 
+L'objectif du projet de développer une application web permettant de visualiser en temps réel un classement de films intéressants en utilistant l'api fournie (repository Github : [OCMovies-API](https://github.com/OpenClassrooms-Student-Center/OCMovies-API-EN-FR)).
+
+<a id="competences"></a>
+## Compétences acquises
+- Développer la partie Front-End d’une application avec HTML, CSS et JavaScript
+- Interagir avec une API REST
+- 
+<a id="techs"></a>
+## Technologies Utilisées
+- [HTML](https://developer.mozilla.org/fr/docs/Web/HTML)
+- [JavaScrip](https://developer.mozilla.org/fr/docs/Web/JavaScript)
+- [CSS](https://developer.mozilla.org/fr/docs/Web/CSS)
+
+<a id="reqs"></a>
+## Requirements
+aucun
+
+<a id="architecture"></a>
+## Architecture et répertoires
+```
+Project
+├── API : api fournie permettant de récupérer les films à afficher
+├── src
+│   ├── assets : package contenant les algorithmes développés
+│   ├── css : répertoire contenant le css
+│   ├── js : répertoire contenant le javascript
+│   ├── index.html : page principale
+```
+
+<a id="localconfig"></a>
+## Configuration locale
 ## Installation
 
 ### 1. Récupération du projet sur votre machine locale
@@ -60,4 +106,13 @@ python manage.py runserver
 ## Utilisation
 
 Ouvrez le ficher OpenclassroomsProject-P6/src/index.html à l'aide d'un navigateur.
+
+
+<a id="presentation"></a>
+### Présentation
+
+[<img alt="presentation" width="480px" src="/assets/presentation.png">](https://docs.google.com/presentation/d/e/2PACX-1vTSUxaJ2euwfwH8mSxhuextNAM0EVNOrpA11h7_2QxJR-eYARsewN8XxMk4ULvYtevuFTQ3FMvCgFQ8/pub?start=true&loop=false&delayms=5000)
+
+
+
 
