@@ -39,7 +39,6 @@ aucun
 ## Architecture et répertoires
 ```
 Project
-├── API : api fournie permettant de récupérer les films à afficher
 ├── src
 │   ├── assets : package contenant les algorithmes développés
 │   ├── css : répertoire contenant le css
