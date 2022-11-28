@@ -24,7 +24,7 @@ L'objectif du projet de développer une application web permettant de visualiser
 ## Compétences acquises
 - Développer la partie Front-End d’une application avec HTML, CSS et JavaScript
 - Interagir avec une API REST
-- 
+
 <a id="techs"></a>
 ## Technologies Utilisées
 - [HTML](https://developer.mozilla.org/fr/docs/Web/HTML)
